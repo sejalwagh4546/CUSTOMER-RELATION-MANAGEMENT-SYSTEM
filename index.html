@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SysInsight CRM Platform</title>
+    <style>
+        :root {
+            --bg-main: #0b132b;
+            --bg-card: #1c2541;
+            --bg-input: #111a33;
+            --accent-glow: #3b82f6;
+            --text-primary: #ffffff;
+            --text-secondary: #94a3b8;
+            --neon-green: #10b981;
+            --neon-red: #ef4444;
+        }
+        body {
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            margin: 0; padding: 0;
+            min-height: 100vh;
+        }
+        #auth-screen { display: flex; min-height: 100vh; }
+        .auth-left { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 0 8%; background: linear-gradient(135deg, #070d1f 0%, #0c1633 100%); }
+        .auth-left h1 { font-size: 64px; font-weight: 800; margin: 10px 0; }
+        .auth-right { flex: 1; display: flex; justify-content: center; align-items: center; }
+        .auth-card { background-color: var(--bg-card); padding: 40px; border-radius: 16px; width: 100%; max-width: 420px; box-shadow: 0 0 40px rgba(0,0,0,0.4); }
+        .input-wrapper { margin-bottom: 16px; }
+        .input-wrapper label { display: block; font-size: 12px; color: var(--text-secondary); margin-bottom: 6px; text-transform: uppercase; }
+        .auth-input { width: 100%; padding: 14px; background-color: var(--bg-input); border: 1px solid rgba(255,255,255,0.1); color: white; border-radius: 8px; box-sizing: border-box; }
+        .auth-btn { width: 100%; padding: 14px; background-color: var(--accent-glow); color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        
+        #crm-dashboard { display: flex; min-height: 100vh; }
+        
+        /* PREMIUM SIDEBAR STYLES */
+        .sidebar {
+            width: 260px;
+            background-color: #0c1427;
+            border-right: 1px solid rgba(255, 255, 255, 0.03);
+            padding: 24px 16px;
+            display: flex;
+            flex-direction: column;
+            box-sizing: border-box;
+        }
+        .sidebar-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 30px;
+            padding-left: 8px;
+        }
+        .sidebar-logo span {
+            color: #f59e0b;
+        }
+        .menu-group-title {
+            font-size: 11px;
+            font-weight: 700;
+            color: #475569;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin: 20px 0 10px 8px;
+        }
+        .nav-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 14px;
+            color: #94a3b8;
+            text-decoration: none;
+            border-radius: 10px;
+            margin-bottom: 4px;
+            font-size: 15px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            box-sizing: border-box;
+        }
+        .nav-item-content {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .nav-item:hover {
+            color: var(--text-primary);
+            background-color: rgba(255, 255, 255, 0.02);
+        }
+        .nav-item.active {
+            background: #1e1b4b;
+            border: 1px solid #312e81;
+            color: #ffffff;
+        }
+        .active-dot {
+            width: 6px;
+            height: 6px;
+            background-color: #a855f7;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #a855f7;
+        }
+        .logout-btn {
+            margin-top: auto;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 14px;
+            color: #ef4444;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+        .logout-btn:hover {
+            opacity: 0.8;
+        }
+        
+        /* CONTENT PANELS STYLES */
+        .main-content { flex: 1; padding: 30px; }
+        .top-navbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        
+        .user-profile-badge { display: flex; align-items: center; gap: 10px; background-color: var(--bg-card); padding: 6px 14px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05); }
+        .profile-avatar { width: 28px; height: 28px; border-radius: 50%; background-color: #7c3aed; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 12px; }
+        
+        .hero-banner { background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); padding: 30px; border-radius: 16px; margin-bottom: 30px; }
+        .dashboard-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 25px; }
+        .board-panel { background-color: var(--bg-card); border-radius: 16px; padding: 24px; }
+        .kanban-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
+        .kanban-col { background: var(--bg-input); padding: 15px; border-radius: 12px; min-height: 150px; }
+        .lead-card { background: var(--bg-card); padding: 16px; border-radius: 8px; border-left: 4px solid var(--accent-glow); margin-bottom: 12px; cursor: pointer; }
+        .filter-input { width: 100%; padding: 12px; background-color: var(--bg-input); border: 1px solid rgba(255,255,255,0.08); color: white; border-radius: 8px; box-sizing: border-box; }
+        .project-item { background: var(--bg-input); padding: 14px; border-radius: 8px; margin-bottom: 10px; display: flex; justify-content: space-between; }
+    </style>
+</head>
+<body>
+
+    <!-- AUTHENTICATION FORM SCREEN -->
+    <div id="auth-screen">
+        <div class="auth-left">
+            <h3>LEAD MANAGEMENT • CRM</h3>
+            <h1>Capture<br>Scoring<br>Routing</h1>
+        </div>
+        <div class="auth-right">
+            <div class="auth-card">
+                <h2 id="form-heading">Welcome to SysInsight CRM</h2>
+                <p id="msg-err" style="color: var(--neon-red); display:none; font-size:13px; font-weight:bold;"></p>
+                
+                <div class="input-wrapper" id="name-field-box" style="display: none;">
+                    <label>Full Agent Name</label>
+                    <input type="text" id="inp-name" class="auth-input" placeholder="e.g. Aarav Sharma">
+                </div>
+                <div class="input-wrapper">
+                    <label>Username / Email</label>
+                    <input type="email" id="inp-email" class="auth-input" placeholder="your.name@company.in">
+                </div>
+                <div class="input-wrapper">
+                    <label>Password</label>
+                    <input type="password" id="inp-pass" class="auth-input" placeholder="••••••••••••">
+                </div>
+                
+                <button class="auth-btn" onclick="submitAuthData()">Sign In →</button>
+                <a class="toggle-link" style="color: var(--text-secondary); display:block; margin-top:15px; cursor:pointer;" onclick="toggleInterfaceMode()">New CRM agent? <span style="color:var(--accent-glow)">Create an account</span></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN APP DASHBOARD VIEW -->
+    <div id="crm-dashboard" style="display: none;">
+        <!-- SIDEBAR NAVIGATION -->
+        <div class="sidebar">
+            <div class="sidebar-logo">
+                <span>⚡</span> SysInsight
+            </div>
+            
+            <div class="menu-group-title">Main Menu</div>
+            
+            <a class="nav-item active">
+                <div class="nav-item-content">
+                    <span>🎛️</span> Dashboard
+                </div>
+                <div class="active-dot"></div>
+            </a>
+            
+            <a class="nav-item">
+                <div class="nav-item-content">
+                    <span>👥</span> Leads
+                </div>
+            </a>
+            
+            <a class="nav-item">
+                <div class="nav-item-content">
+                    <span>📖</span> Contacts
+                </div>
+            </a>
+            
+            <a class="nav-item">
+                <div class="nav-item-content">
+                    <span>🏢</span> Companies
+                </div>
+            </a>
+            
+            <a class="nav-item">
+                <div class="nav-item-content">
+                    <span>💼</span> Deals
+                </div>
+            </a>
+            
+            <a class="nav-item">
+                <div class="nav-item-content">
+                    <span>📅</span> Calendar
+                </div>
+            </a>
+            
+            <a class="nav-item">
+                <div class="nav-item-content">
+                    <span>☑️</span> Tasks
+                </div>
+            </a>
+            
+            <a class="nav-item">
+                <div class="nav-item-content">
+                    <span>📊</span> Reports
+                </div>
+            </a>
+            
+            <a class="nav-item">
+                <div class="nav-item-content">
+                    <span>🛠️</span> Sales Team
+                </div>
+            </a>
+            
+            <div class="menu-group-title">Support</div>
+            
+            <a class="nav-item">
+                <div class="nav-item-content">
+                    <span>⚙️</span> Settings
+                </div>
+            </a>
+            
+            <div class="logout-btn" onclick="performLogout()">
+                <span>🚪</span> Logout
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <div class="top-navbar">
+                <div id="live-timestamp-box" style="color: var(--text-secondary);"></div>
+                
+                <!-- DYNAMIC PROFILE SECTION -->
+                <div class="user-profile-badge">
+                    <div class="profile-avatar" id="agent-avatar-initials">U</div>
+                    <span id="agent-label-name" style="font-size: 14px; font-weight: 500;">Loading...</span>
+                </div>
+            </div>
+
+            <div class="hero-banner">
+                <!-- DYNAMIC HEADER GREETING -->
+                <h2 style="margin:0 0 10px 0;">Good Morning, <span id="agent-display-title">Agent</span> 👋</h2>
+                <p style="margin:0; color:var(--text-secondary);">Here's an overview of your CRM performance today.</p>
+            </div>
+
+            <div class="dashboard-grid">
+                <div class="board-panel">
+                    <h3>Sales Pipeline</h3>
+                    <div class="kanban-row">
+                        <div class="kanban-col">
+                            <h4>Assigned</h4>
+                            <!-- INDIAN LEAD CARD -->
+                            <div class="lead-card" onclick="updateBudgetField(450000)">
+                                <strong>Rohan Mehta</strong>
+                                <div style="font-size: 12px; color: var(--text-secondary);">Budget: ₹4,50,000</div>
+                            </div>
+                            <div class="lead-card" onclick="updateBudgetField(750000)">
+                                <strong>Priya Patel</strong>
+                                <div style="font-size: 12px; color: var(--text-secondary);">Budget: ₹7,50,000</div>
+                            </div>
+                        </div>
+                        <div class="kanban-col">
+                            <h4>Pending</h4>
+                            <div class="lead-card" onclick="updateBudgetField(1200000)">
+                                <strong>Ananya Verma</strong>
+                                <div style="font-size: 12px; color: var(--text-secondary);">Budget: ₹12,00,000</div>
+                            </div>
+                        </div>
+                        <div class="kanban-col">
+                            <h4>Follow-Up</h4>
+                            <div class="lead-card" onclick="updateBudgetField(600000)">
+                                <strong>Vikram Malhotra</strong>
+                                <div style="font-size: 12px; color: var(--text-secondary);">Budget: ₹6,00,000</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="board-panel">
+                    <h3>Inventory Matcher</h3>
+                    <input type="number" id="budgetInputBox" class="filter-input" placeholder="Enter budget in ₹ to filter..." oninput="fetchMatchingProjects()">
+                    <div id="inventory-render-target" style="margin-top:15px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let isSignUpMode = false;
+
+        // Date Display
+        setInterval(() => {
+            document.getElementById('live-timestamp-box').innerText = new Date().toLocaleString('en-IN');
+        }, 1000);
+
+        function toggleInterfaceMode() {
+            isSignUpMode = !isSignUpMode;
+            document.getElementById('name-field-box').style.display = isSignUpMode ? 'block' : 'none';
+            document.getElementById('form-heading').innerText = isSignUpMode ? "Create Agent Account" : "Welcome to SysInsight CRM";
+        }
+
+        async function submitAuthData() {
+            const email = document.getElementById('inp-email').value;
+            const password = document.getElementById('inp-pass').value;
+            const name = document.getElementById('inp-name').value;
+            const errorElement = document.getElementById('msg-err');
+
+            const urlPath = isSignUpMode ? 'signup' : 'login';
+
+            try {
+                const response = await fetch(`http://localhost:3000/api/auth/${urlPath}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password, name })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    errorElement.innerText = data.message;
+                    errorElement.style.display = 'block';
+                    return;
+                }
+
+                if (isSignUpMode) {
+                    alert("Account registered successfully! Switching to login.");
+                    toggleInterfaceMode();
+                } else {
+                    const loggedInName = data.user.name; 
+                    
+                    // 1. Update Profile bar text
+                    document.getElementById('agent-label-name').innerText = loggedInName;
+                    
+                    // 2. Update Header greeting text
+                    document.getElementById('agent-display-title').innerText = loggedInName.split(' ')[0];
+                    
+                    // 3. Update Profile Avatar circle icon
+                    document.getElementById('agent-avatar-initials').innerText = loggedInName.charAt(0).toUpperCase();
+
+                    // Show dashboard layout
+                    document.getElementById('auth-screen').style.display = 'none';
+                    document.getElementById('crm-dashboard').style.display = 'flex';
+                    fetchMatchingProjects();
+                }
+            } catch (err) {
+                errorElement.innerText = "Error: Check that app.js is running.";
+                errorElement.style.display = 'block';
+            }
+        }
+
+        function performLogout() {
+            document.getElementById('crm-dashboard').style.display = 'none';
+            document.getElementById('auth-screen').style.display = 'flex';
+        }
+
+        async function fetchMatchingProjects() {
+            const budget = document.getElementById('budgetInputBox').value || 0;
+            const renderBox = document.getElementById('inventory-render-target');
+            const response = await fetch(`http://localhost:3000/api/inventory?budget=${budget}`);
+            const items = await response.json();
+            renderBox.innerHTML = '';
+            items.forEach(p => {
+                renderBox.innerHTML += `<div class="project-item"><span><strong>${p.name}</strong></span><span>₹${p.price.toLocaleString('en-IN')}</span></div>`;
+            });
+        }
+
+        function updateBudgetField(val) {
+            document.getElementById('budgetInputBox').value = val;
+            fetchMatchingProjects();
+        }
+    </script>
+</body>
+</html>
