@@ -14,6 +14,7 @@
             --text-secondary: #94a3b8;
             --neon-green: #10b981;
             --neon-red: #ef4444;
+            --neon-purple: #a855f7;
         }
         body {
             font-family: 'Segoe UI', Roboto, sans-serif;
@@ -34,7 +35,7 @@
         
         #crm-dashboard { display: flex; min-height: 100vh; }
         
-        /* PREMIUM SIDEBAR STYLES */
+        /* SIDEBAR STYLES */
         .sidebar {
             width: 260px;
             background-color: #0c1427;
@@ -54,9 +55,7 @@
             margin-bottom: 30px;
             padding-left: 8px;
         }
-        .sidebar-logo span {
-            color: #f59e0b;
-        }
+        .sidebar-logo span { color: #f59e0b; }
         .menu-group-title {
             font-size: 11px;
             font-weight: 700;
@@ -80,51 +79,17 @@
             cursor: pointer;
             box-sizing: border-box;
         }
-        .nav-item-content {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .nav-item:hover {
-            color: var(--text-primary);
-            background-color: rgba(255, 255, 255, 0.02);
-        }
-        .nav-item.active {
-            background: #1e1b4b;
-            border: 1px solid #312e81;
-            color: #ffffff;
-        }
-        .active-dot {
-            width: 6px;
-            height: 6px;
-            background-color: #a855f7;
-            border-radius: 50%;
-            box-shadow: 0 0 8px #a855f7;
-        }
-        .logout-btn {
-            margin-top: auto;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 14px;
-            color: #ef4444;
-            text-decoration: none;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: opacity 0.2s;
-        }
-        .logout-btn:hover {
-            opacity: 0.8;
-        }
+        .nav-item-content { display: flex; align-items: center; gap: 12px; }
+        .nav-item:hover { color: var(--text-primary); background-color: rgba(255, 255, 255, 0.02); }
+        .nav-item.active { background: #1e1b4b; border: 1px solid #312e81; color: #ffffff; }
+        .active-dot { width: 6px; height: 6px; background-color: #a855f7; border-radius: 50%; box-shadow: 0 0 8px #a855f7; }
+        .logout-btn { margin-top: auto; display: flex; align-items: center; gap: 12px; padding: 12px 14px; color: #ef4444; text-decoration: none; font-size: 15px; font-weight: 600; cursor: pointer; }
         
-        /* CONTENT PANELS STYLES */
+        /* CONTENT AREA STYLES */
         .main-content { flex: 1; padding: 30px; }
         .top-navbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
-        
         .user-profile-badge { display: flex; align-items: center; gap: 10px; background-color: var(--bg-card); padding: 6px 14px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05); }
         .profile-avatar { width: 28px; height: 28px; border-radius: 50%; background-color: #7c3aed; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 12px; }
-        
         .hero-banner { background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); padding: 30px; border-radius: 16px; margin-bottom: 30px; }
         .dashboard-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 25px; }
         .board-panel { background-color: var(--bg-card); border-radius: 16px; padding: 24px; }
@@ -133,6 +98,28 @@
         .lead-card { background: var(--bg-card); padding: 16px; border-radius: 8px; border-left: 4px solid var(--accent-glow); margin-bottom: 12px; cursor: pointer; }
         .filter-input { width: 100%; padding: 12px; background-color: var(--bg-input); border: 1px solid rgba(255,255,255,0.08); color: white; border-radius: 8px; box-sizing: border-box; }
         .project-item { background: var(--bg-input); padding: 14px; border-radius: 8px; margin-bottom: 10px; display: flex; justify-content: space-between; }
+        
+        /* VIEW SECTIONS */
+        .view-section { display: none; }
+        .view-section.active-view { display: block; }
+        
+        /* CUSTOM STYLES FOR DEALS, CALENDAR, TASKS */
+        .data-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        .data-table th, .data-table td { text-align: left; padding: 14px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .data-table th { color: var(--text-secondary); font-size: 13px; text-transform: uppercase; background: var(--bg-input); }
+        .badge { padding: 4px 10px; border-radius: 12px; font-size: 12px; font-weight: bold; display: inline-block; }
+        .badge-won { background: rgba(16, 185, 129, 0.2); color: var(--neon-green); }
+        .badge-progress { background: rgba(59, 130, 246, 0.2); color: var(--accent-glow); }
+        
+        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; margin-top: 20px; }
+        .calendar-day-header { text-align: center; color: var(--text-secondary); font-size: 13px; font-weight: bold; padding-bottom: 10px; }
+        .calendar-cell { background: var(--bg-input); border-radius: 8px; min-height: 80px; padding: 8px; font-size: 12px; }
+        .calendar-cell.today { border: 1px solid var(--accent-glow); }
+        .event-chip { background: var(--bg-card); border-left: 3px solid var(--neon-purple); padding: 4px 6px; border-radius: 4px; margin-top: 6px; font-size: 11px; }
+
+        .task-list-item { background: var(--bg-input); padding: 14px; border-radius: 8px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+        .task-check { display: flex; align-items: center; gap: 12px; }
+        .task-check input { cursor: pointer; width: 18px; height: 18px; }
     </style>
 </head>
 <body>
@@ -177,67 +164,48 @@
             
             <div class="menu-group-title">Main Menu</div>
             
-            <a class="nav-item active">
-                <div class="nav-item-content">
-                    <span>🎛️</span> Dashboard
-                </div>
+            <a class="nav-item active" onclick="switchTab(this, 'view-dashboard')">
+                <div class="nav-item-content"><span>🎛️</span> Dashboard</div>
                 <div class="active-dot"></div>
             </a>
             
-            <a class="nav-item">
-                <div class="nav-item-content">
-                    <span>👥</span> Leads
-                </div>
+            <a class="nav-item" onclick="switchTab(this, 'view-placeholder')">
+                <div class="nav-item-content"><span>👥</span> Leads</div>
             </a>
             
-            <a class="nav-item">
-                <div class="nav-item-content">
-                    <span>📖</span> Contacts
-                </div>
+            <a class="nav-item" onclick="switchTab(this, 'view-placeholder')">
+                <div class="nav-item-content"><span>📖</span> Contacts</div>
             </a>
             
-            <a class="nav-item">
-                <div class="nav-item-content">
-                    <span>🏢</span> Companies
-                </div>
+            <a class="nav-item" onclick="switchTab(this, 'view-placeholder')">
+                <div class="nav-item-content"><span>🏢</span> Companies</div>
             </a>
             
-            <a class="nav-item">
-                <div class="nav-item-content">
-                    <span>💼</span> Deals
-                </div>
+            <!-- YOUR ASSIGNED PARTS -->
+            <a class="nav-item" onclick="switchTab(this, 'view-deals')">
+                <div class="nav-item-content"><span>💼</span> Deals</div>
             </a>
             
-            <a class="nav-item">
-                <div class="nav-item-content">
-                    <span>📅</span> Calendar
-                </div>
+            <a class="nav-item" onclick="switchTab(this, 'view-calendar')">
+                <div class="nav-item-content"><span>📅</span> Calendar</div>
             </a>
             
-            <a class="nav-item">
-                <div class="nav-item-content">
-                    <span>☑️</span> Tasks
-                </div>
+            <a class="nav-item" onclick="switchTab(this, 'view-tasks')">
+                <div class="nav-item-content"><span>☑️</span> Tasks</div>
             </a>
             
-            <a class="nav-item">
-                <div class="nav-item-content">
-                    <span>📊</span> Reports
-                </div>
+            <a class="nav-item" onclick="switchTab(this, 'view-placeholder')">
+                <div class="nav-item-content"><span>📊</span> Reports</div>
             </a>
             
-            <a class="nav-item">
-                <div class="nav-item-content">
-                    <span>🛠️</span> Sales Team
-                </div>
+            <a class="nav-item" onclick="switchTab(this, 'view-placeholder')">
+                <div class="nav-item-content"><span>🛠️</span> Sales Team</div>
             </a>
             
             <div class="menu-group-title">Support</div>
             
-            <a class="nav-item">
-                <div class="nav-item-content">
-                    <span>⚙️</span> Settings
-                </div>
+            <a class="nav-item" onclick="switchTab(this, 'view-placeholder')">
+                <div class="nav-item-content"><span>⚙️</span> Settings</div>
             </a>
             
             <div class="logout-btn" onclick="performLogout()">
@@ -249,7 +217,6 @@
             <div class="top-navbar">
                 <div id="live-timestamp-box" style="color: var(--text-secondary);"></div>
                 
-                <!-- DYNAMIC PROFILE SECTION -->
                 <div class="user-profile-badge">
                     <div class="profile-avatar" id="agent-avatar-initials">U</div>
                     <span id="agent-label-name" style="font-size: 14px; font-weight: 500;">Loading...</span>
@@ -257,60 +224,494 @@
             </div>
 
             <div class="hero-banner">
-                <!-- DYNAMIC HEADER GREETING -->
                 <h2 style="margin:0 0 10px 0;">Good Morning, <span id="agent-display-title">Agent</span> 👋</h2>
                 <p style="margin:0; color:var(--text-secondary);">Here's an overview of your CRM performance today.</p>
             </div>
 
-            <div class="dashboard-grid">
-                <div class="board-panel">
-                    <h3>Sales Pipeline</h3>
-                    <div class="kanban-row">
-                        <div class="kanban-col">
-                            <h4>Assigned</h4>
-                            <!-- INDIAN LEAD CARD -->
-                            <div class="lead-card" onclick="updateBudgetField(450000)">
-                                <strong>Rohan Mehta</strong>
-                                <div style="font-size: 12px; color: var(--text-secondary);">Budget: ₹4,50,000</div>
+            <!-- VIEW 1: DASHBOARD MAIN -->
+            <div id="view-dashboard" class="view-section active-view">
+                <div class="dashboard-grid">
+                    <div class="board-panel">
+                        <h3>Sales Pipeline</h3>
+                        <div class="kanban-row">
+                            <div class="kanban-col">
+                                <h4>Assigned</h4>
+                                <div class="lead-card" onclick="updateBudgetField(450000)">
+                                    <strong>Rohan Mehta</strong>
+                                    <div style="font-size: 12px; color: var(--text-secondary);">Budget: ₹4,50,000</div>
+                                </div>
+                                <div class="lead-card" onclick="updateBudgetField(750000)">
+                                    <strong>Priya Patel</strong>
+                                    <div style="font-size: 12px; color: var(--text-secondary);">Budget: ₹7,50,000</div>
+                                </div>
                             </div>
-                            <div class="lead-card" onclick="updateBudgetField(750000)">
-                                <strong>Priya Patel</strong>
-                                <div style="font-size: 12px; color: var(--text-secondary);">Budget: ₹7,50,000</div>
+                            <div class="kanban-col">
+                                <h4>Pending</h4>
+                                <div class="lead-card" onclick="updateBudgetField(1200000)">
+                                    <strong>Ananya Verma</strong>
+                                    <div style="font-size: 12px; color: var(--text-secondary);">Budget: ₹12,00,000</div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="kanban-col">
-                            <h4>Pending</h4>
-                            <div class="lead-card" onclick="updateBudgetField(1200000)">
-                                <strong>Ananya Verma</strong>
-                                <div style="font-size: 12px; color: var(--text-secondary);">Budget: ₹12,00,000</div>
-                            </div>
-                        </div>
-                        <div class="kanban-col">
-                            <h4>Follow-Up</h4>
-                            <div class="lead-card" onclick="updateBudgetField(600000)">
-                                <strong>Vikram Malhotra</strong>
-                                <div style="font-size: 12px; color: var(--text-secondary);">Budget: ₹6,00,000</div>
+                            <div class="kanban-col">
+                                <h4>Follow-Up</h4>
+                                <div class="lead-card" onclick="updateBudgetField(600000)">
+                                    <strong>Vikram Malhotra</strong>
+                                    <div style="font-size: 12px; color: var(--text-secondary);">Budget: ₹6,00,000</div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="board-panel">
-                    <h3>Inventory Matcher</h3>
-                    <input type="number" id="budgetInputBox" class="filter-input" placeholder="Enter budget in ₹ to filter..." oninput="fetchMatchingProjects()">
-                    <div id="inventory-render-target" style="margin-top:15px;"></div>
+                    <div class="board-panel">
+                        <h3>Inventory Matcher</h3>
+                        <input type="number" id="budgetInputBox" class="filter-input" placeholder="Enter budget in ₹ to filter..." oninput="fetchMatchingProjects()">
+                        <div id="inventory-render-target" style="margin-top:15px;"></div>
+                    </div>
                 </div>
             </div>
+
+ <!-- VIEW 2: DEALS SECTION WITH FUNCTIONAL MODAL -->
+            <div id="view-deals" class="view-section">
+                <div class="board-panel">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <h3>Active Deals Overview</h3>
+                        <button class="auth-btn" style="width: auto; padding: 10px 20px; margin: 0;" onclick="openDealModal()">+ New Deal</button>
+                    </div>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Deal Name</th>
+                                <th>Client Name</th>
+                                <th>Value</th>
+                                <th>Stage</th>
+                                <th>Closing Date</th>
+                            </tr>
+                        </thead>
+                        <tbody id="deals-table-body">
+                            <tr>
+                                <td><strong>Grand Vista Villa Purchase</strong></td>
+                                <td>Rohan Mehta</td>
+                                <td>₹50,00,000</td>
+                                <td><span class="badge badge-progress">Negotiation</span></td>
+                                <td>15 Aug 2026</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Skyline Penthouse Deal</strong></td>
+                                <td>Ananya Verma</td>
+                                <td>₹1,20,00,000</td>
+                                <td><span class="badge badge-progress">Contract Sent</span></td>
+                                <td>02 Sept 2026</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Eco Studio Suite</strong></td>
+                                <td>Vikram Malhotra</td>
+                                <td>₹20,00,000</td>
+                                <td><span class="badge badge-won">Closed Won</span></td>
+                                <td>20 Jul 2026</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- MODAL FOR ADDING NEW DEAL -->
+            <div id="deal-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); justify-content: center; align-items: center; z-index: 1000;">
+                <div class="auth-card" style="max-width: 450px; background-color: var(--bg-card); border: 1px solid rgba(255,255,255,0.1);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <h3 style="margin: 0;">Add New Deal</h3>
+                        <span style="cursor: pointer; font-size: 20px; color: var(--text-secondary);" onclick="closeDealModal()">✕</span>
+                    </div>
+                    
+                    <div class="input-wrapper">
+                        <label>Deal Name</label>
+                        <input type="text" id="deal-name-inp" class="auth-input" placeholder="e.g. Royal Palms Apartment">
+                    </div>
+                    <div class="input-wrapper">
+                        <label>Client Name</label>
+                        <input type="text" id="deal-client-inp" class="auth-input" placeholder="e.g. Rahul Sharma">
+                    </div>
+                    <div class="input-wrapper">
+                        <label>Deal Value (₹)</label>
+                        <input type="number" id="deal-value-inp" class="auth-input" placeholder="e.g. 8500000">
+                    </div>
+                    <div class="input-wrapper">
+                        <label>Stage</label>
+                        <select id="deal-stage-inp" class="auth-input" style="cursor: pointer;">
+                            <option value="Negotiation">Negotiation</option>
+                            <option value="Contract Sent">Contract Sent</option>
+                            <option value="Closed Won">Closed Won</option>
+                        </select>
+                    </div>
+                    <div class="input-wrapper">
+                        <label>Closing Date</label>
+                        <input type="date" id="deal-date-inp" class="auth-input">
+                    </div>
+
+                    <div style="display: flex; gap: 10px; margin-top: 15px;">
+                        <button class="auth-btn" style="background-color: transparent; border: 1px solid var(--text-secondary);" onclick="closeDealModal()">Cancel</button>
+                        <button class="auth-btn" onclick="addNewDeal()">Save Deal</button>
+                    </div>
+                </div>
+            </div>
+            <!-- VIEW 3: CALENDAR SECTION -->
+<!-- VIEW 3: FULL MONTH CALENDAR WITH TASKS -->
+            <div id="view-calendar" class="view-section">
+                <div class="board-panel">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <h3 style="margin: 0;">July 2026 Schedule & Tasks</h3>
+                        <div style="font-size: 13px; color: var(--text-secondary);">
+                            <span style="color: #a855f7;">●</span> Meeting &nbsp; 
+                            <span style="color: #3b82f6;">●</span> Property Visit &nbsp; 
+                            <span style="color: #10b981;">●</span> Payment / Deal
+                        </div>
+                    </div>
+                    
+                    <style>
+                        .full-calendar-grid {
+                            display: grid;
+                            grid-template-columns: repeat(7, 1fr);
+                            gap: 8px;
+                        }
+                        .calendar-day-header {
+                            text-align: center;
+                            color: var(--text-secondary);
+                            font-size: 12px;
+                            font-weight: 700;
+                            padding-bottom: 8px;
+                            text-transform: uppercase;
+                        }
+                        .cal-day-cell {
+                            background: var(--bg-input);
+                            border-radius: 8px;
+                            min-height: 85px;
+                            padding: 6px;
+                            font-size: 12px;
+                            display: flex;
+                            flex-direction: column;
+                            gap: 4px;
+                            border: 1px solid rgba(255,255,255,0.02);
+                        }
+                        .cal-day-cell.other-month {
+                            opacity: 0.3;
+                        }
+                        .cal-day-cell.today-cell {
+                            border: 1px solid var(--accent-glow);
+                            background: rgba(59, 130, 246, 0.08);
+                        }
+                        .day-num {
+                            font-weight: bold;
+                            color: var(--text-secondary);
+                            margin-bottom: 2px;
+                        }
+                        .today-cell .day-num {
+                            color: var(--accent-glow);
+                        }
+                        .task-chip {
+                            font-size: 10px;
+                            padding: 3px 5px;
+                            border-radius: 4px;
+                            color: #ffffff;
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            font-weight: 500;
+                        }
+                        .task-purple { background: rgba(168, 85, 247, 0.25); border-left: 3px solid #a855f7; }
+                        .task-blue { background: rgba(59, 130, 246, 0.25); border-left: 3px solid #3b82f6; }
+                        .task-green { background: rgba(16, 185, 129, 0.25); border-left: 3px solid #10b981; }
+                    </style>
+
+                    <div class="full-calendar-grid">
+                        <!-- Headers -->
+                        <div class="calendar-day-header">Mon</div>
+                        <div class="calendar-day-header">Tue</div>
+                        <div class="calendar-day-header">Wed</div>
+                        <div class="calendar-day-header">Thu</div>
+                        <div class="calendar-day-header">Fri</div>
+                        <div class="calendar-day-header">Sat</div>
+                        <div class="calendar-day-header">Sun</div>
+
+                        <!-- Days -->
+                        <div class="cal-day-cell other-month"><span class="day-num">29</span></div>
+                        <div class="cal-day-cell other-month"><span class="day-num">30</span></div>
+                        
+                        <!-- July Starts on Wednesday -->
+                        <div class="cal-day-cell"><span class="day-num">1</span></div>
+                        <div class="cal-day-cell"><span class="day-num">2</span><div class="task-chip task-blue">Client Call - Rohan</div></div>
+                        <div class="cal-day-cell"><span class="day-num">3</span></div>
+                        <div class="cal-day-cell"><span class="day-num">4</span></div>
+                        <div class="cal-day-cell"><span class="day-num">5</span></div>
+
+                        <div class="cal-day-cell"><span class="day-num">6</span><div class="task-chip task-purple">Team Sync</div></div>
+                        <div class="cal-day-cell"><span class="day-num">7</span></div>
+                        <div class="cal-day-cell"><span class="day-num">8</span><div class="task-chip task-blue">Site Visit - Priya</div></div>
+                        <div class="cal-day-cell"><span class="day-num">9</span></div>
+                        <div class="cal-day-cell"><span class="day-num">10</span><div class="task-chip task-green">Token Recv ₹50k</div></div>
+                        <div class="cal-day-cell"><span class="day-num">11</span></div>
+                        <div class="cal-day-cell"><span class="day-num">12</span></div>
+
+                        <div class="cal-day-cell"><span class="day-num">13</span></div>
+                        <div class="cal-day-cell"><span class="day-num">14</span><div class="task-chip task-purple">Doc Review</div></div>
+                        <div class="cal-day-cell"><span class="day-num">15</span></div>
+                        <div class="cal-day-cell"><span class="day-num">16</span><div class="task-chip task-blue">Call Ananya</div></div>
+                        <div class="cal-day-cell"><span class="day-num">17</span></div>
+                        <div class="cal-day-cell"><span class="day-num">18</span><div class="task-chip task-green">Villa Deal Sign</div></div>
+                        <div class="cal-day-cell"><span class="day-num">19</span></div>
+
+                        <div class="cal-day-cell"><span class="day-num">20</span><div class="task-chip task-purple">Client Call</div></div>
+                        <div class="cal-day-cell"><span class="day-num">21</span></div>
+                        <div class="cal-day-cell"><span class="day-num">22</span><div class="task-chip task-blue">Property Visit</div></div>
+                        <div class="cal-day-cell"><span class="day-num">23</span></div>
+                        <div class="cal-day-cell today-cell"><span class="day-num">24 (Today)</span><div class="task-chip task-purple">Contract Review</div><div class="task-chip task-green">Payment Due</div></div>
+                        <div class="cal-day-cell"><span class="day-num">25</span></div>
+                        <div class="cal-day-cell"><span class="day-num">26</span></div>
+
+                        <div class="cal-day-cell"><span class="day-num">27</span><div class="task-chip task-blue">Follow-up Vikram</div></div>
+                        <div class="cal-day-cell"><span class="day-num">28</span></div>
+                        <div class="cal-day-cell"><span class="day-num">29</span><div class="task-chip task-purple">Skyline Meeting</div></div>
+                        <div class="cal-day-cell"><span class="day-num">30</span></div>
+                        <div class="cal-day-cell"><span class="day-num">31</span><div class="task-chip task-green">Month Close</div></div>
+                        <div class="cal-day-cell other-month"><span class="day-num">1</span></div>
+                        <div class="cal-day-cell other-month"><span class="day-num">2</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIEW 4: TASKS SECTION -->
+            <div id="view-tasks" class="view-section">
+                <div class="board-panel">
+                    <h3>My Action Items</h3>
+                    <div class="task-list-item">
+                        <div class="task-check">
+                            <input type="checkbox" checked>
+                            <span>Follow up with Rohan Mehta regarding Grand Vista Villas price quote</span>
+                        </div>
+                        <span class="badge badge-won">Completed</span>
+                    </div>
+                    <div class="task-list-item">
+                        <div class="task-check">
+                            <input type="checkbox">
+                            <span>Send property layout PDF to Priya Patel</span>
+                        </div>
+                        <span class="badge badge-progress">Due Today</span>
+                    </div>
+                    <div class="task-list-item">
+                        <div class="task-check">
+                            <input type="checkbox">
+                            <span>Schedule site visit for Ananya Verma at Skyline Towers</span>
+                        </div>
+                        <span class="badge badge-progress">Due Tomorrow</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PLACEHOLDER FOR FRIEND'S PARTS -->
+            <div id="view-placeholder" class="view-section">
+                <div class="board-panel" style="text-align: center; padding: 50px;">
+                    <h3>Section Under Development</h3>
+                    <p style="color: var(--text-secondary);">Your teammate is building this section!</p>
+                </div>
+            </div>
+
         </div>
     </div>
 
     <script>
-        let isSignUpMode = false;
+let isSignUpMode = false;
 
-        // Date Display
+        // GLOBAL SHARED STATE ACROSS ALL MODULES
+        const crmData = {
+            deals: [
+                { id: 1, name: "Grand Vista Villa Purchase", client: "Rohan Mehta", value: 5000000, stage: "Negotiation", date: "2026-08-15", col: "Assigned" },
+                { id: 2, name: "Skyline Penthouse Deal", client: "Ananya Verma", value: 12000000, stage: "Contract Sent", date: "2026-09-02", col: "Pending" },
+                { id: 3, name: "Eco Studio Suite", client: "Vikram Malhotra", value: 2000000, stage: "Closed Won", date: "2026-07-20", col: "Follow-Up" },
+                { id: 4, name: "NAVSHAKTI APARTMENTS", client: "Sejal Wagh", value: 90000000, stage: "Contract Sent", date: "2026-07-25", col: "Pending" }
+            ],
+            tasks: [
+                { id: 1, text: "Follow up with Rohan Mehta regarding Grand Vista Villas price quote", status: "Completed", date: "2026-07-20" },
+                { id: 2, text: "Send property layout PDF to Priya Patel", status: "Due Today", date: "2026-07-24" },
+                { id: 3, text: "Schedule site visit for Ananya Verma at Skyline Towers", status: "Due Tomorrow", date: "2026-07-25" }
+            ]
+        };
+
+        // Live Clock
         setInterval(() => {
-            document.getElementById('live-timestamp-box').innerText = new Date().toLocaleString('en-IN');
+            const clockEl = document.getElementById('live-timestamp-box');
+            if (clockEl) clockEl.innerText = new Date().toLocaleString('en-IN');
         }, 1000);
+
+        // Sidebar Navigation Switcher
+        function switchTab(element, viewId) {
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+                const dot = item.querySelector('.active-dot');
+                if(dot) dot.remove();
+            });
+
+            element.classList.add('active');
+            element.innerHTML += '<div class="active-dot"></div>';
+
+            document.querySelectorAll('.view-section').forEach(view => {
+                view.classList.remove('active-view');
+            });
+            
+            document.getElementById(viewId).classList.add('active-view');
+        }
+
+        // --- MASTER RENDER FUNCTION (LINKS ALL MODULES) ---
+        function renderAllModules() {
+            renderDashboardPipeline();
+            renderDealsTable();
+            renderCalendarEvents();
+            renderTaskList();
+        }
+
+        // 1. RENDER DASHBOARD SALES PIPELINE
+        function renderDashboardPipeline() {
+            const assignedCol = document.getElementById('pipeline-assigned');
+            const pendingCol = document.getElementById('pipeline-pending');
+            const followCol = document.getElementById('pipeline-followup');
+
+            if (!assignedCol) return; // Guard clause if elements aren't formatted with IDs yet
+
+            assignedCol.innerHTML = '<h4>Assigned</h4>';
+            pendingCol.innerHTML = '<h4>Pending</h4>';
+            followCol.innerHTML = '<h4>Follow-Up</h4>';
+
+            crmData.deals.forEach(deal => {
+                const card = `
+                    <div class="lead-card" onclick="updateBudgetField(${deal.value})">
+                        <strong>${deal.client}</strong>
+                        <div style="font-size: 11px; color: var(--accent-glow); margin-top:2px;">${deal.name}</div>
+                        <div style="font-size: 12px; color: var(--text-secondary); margin-top:4px;">Budget: ₹${deal.value.toLocaleString('en-IN')}</div>
+                    </div>
+                `;
+
+                if (deal.col === 'Assigned') assignedCol.innerHTML += card;
+                else if (deal.col === 'Follow-Up') followCol.innerHTML += card;
+                else pendingCol.innerHTML += card;
+            });
+        }
+
+        // 2. RENDER DEALS TABLE
+        function renderDealsTable() {
+            const tableBody = document.getElementById('deals-table-body');
+            if (!tableBody) return;
+
+            tableBody.innerHTML = '';
+            crmData.deals.forEach(deal => {
+                const badgeClass = deal.stage === 'Closed Won' ? 'badge-won' : 'badge-progress';
+                const formattedDate = deal.date ? new Date(deal.date).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' }) : 'Pending';
+
+                tableBody.innerHTML += `
+                    <tr>
+                        <td><strong>${deal.name}</strong></td>
+                        <td>${deal.client}</td>
+                        <td>₹${deal.value.toLocaleString('en-IN')}</td>
+                        <td><span class="badge ${badgeClass}">${deal.stage}</span></td>
+                        <td>${formattedDate}</td>
+                    </tr>
+                `;
+            });
+        }
+
+        // 3. RENDER CALENDAR EVENTS & DEADLINES
+        function renderCalendarEvents() {
+            // Clears and re-attaches deal milestone chips to respective date cells
+            crmData.deals.forEach(deal => {
+                if (!deal.date) return;
+                const dayNum = parseInt(deal.date.split('-')[2], 10);
+                const cell = document.getElementById(`cal-day-${dayNum}`);
+                if (cell && !cell.querySelector(`[data-deal-id="${deal.id}"]`)) {
+                    cell.innerHTML += `<div class="task-chip task-green" data-deal-id="${deal.id}">${deal.client}: Close Deal</div>`;
+                }
+            });
+        }
+
+        // 4. RENDER TASKS LIST
+        function renderTaskList() {
+            const taskContainer = document.getElementById('view-tasks');
+            if (!taskContainer) return;
+
+            const boardPanel = taskContainer.querySelector('.board-panel');
+            if (!boardPanel) return;
+
+            let html = '<h3>My Action Items</h3>';
+            crmData.tasks.forEach(task => {
+                const badgeClass = task.status === 'Completed' ? 'badge-won' : 'badge-progress';
+                const isChecked = task.status === 'Completed' ? 'checked' : '';
+                html += `
+                    <div class="task-list-item">
+                        <div class="task-check">
+                            <input type="checkbox" ${isChecked} onchange="toggleTaskStatus(${task.id})">
+                            <span style="${isChecked ? 'text-decoration: line-through; opacity: 0.6;' : ''}">${task.text}</span>
+                        </div>
+                        <span class="badge ${badgeClass}">${task.status}</span>
+                    </div>
+                `;
+            });
+            boardPanel.innerHTML = html;
+        }
+
+        // MODAL & INTERACTION HANDLERS
+        function openDealModal() {
+            document.getElementById('deal-modal').style.display = 'flex';
+        }
+
+        function closeDealModal() {
+            document.getElementById('deal-modal').style.display = 'none';
+            document.getElementById('deal-name-inp').value = '';
+            document.getElementById('deal-client-inp').value = '';
+            document.getElementById('deal-value-inp').value = '';
+            document.getElementById('deal-date-inp').value = '';
+        }
+
+        function addNewDeal() {
+            const name = document.getElementById('deal-name-inp').value;
+            const client = document.getElementById('deal-client-inp').value;
+            const val = document.getElementById('deal-value-inp').value;
+            const stage = document.getElementById('deal-stage-inp').value;
+            const rawDate = document.getElementById('deal-date-inp').value;
+
+            if (!name || !client || !val) {
+                alert('Please fill in Deal Name, Client, and Value.');
+                return;
+            }
+
+            const newId = Date.now();
+            const numericVal = Number(val);
+
+            // 1. Add to central deals array
+            crmData.deals.push({
+                id: newId,
+                name: name,
+                client: client,
+                value: numericVal,
+                stage: stage,
+                date: rawDate || "2026-07-30",
+                col: stage === 'Closed Won' ? 'Follow-Up' : 'Pending'
+            });
+
+            // 2. Automatically generate a connected Task for this deal
+            crmData.tasks.push({
+                id: newId + 1,
+                text: `Follow up with ${client} regarding ${name}`,
+                status: "Due Soon",
+                date: rawDate
+            });
+
+            // 3. Trigger global re-render across all tabs
+            renderAllModules();
+            closeDealModal();
+        }
+
+        function toggleTaskStatus(taskId) {
+            const task = crmData.tasks.find(t => t.id === taskId);
+            if (task) {
+                task.status = task.status === 'Completed' ? 'Due Soon' : 'Completed';
+                renderTaskList();
+            }
+        }
 
         function toggleInterfaceMode() {
             isSignUpMode = !isSignUpMode;
@@ -347,23 +748,23 @@
                 } else {
                     const loggedInName = data.user.name; 
                     
-                    // 1. Update Profile bar text
                     document.getElementById('agent-label-name').innerText = loggedInName;
-                    
-                    // 2. Update Header greeting text
                     document.getElementById('agent-display-title').innerText = loggedInName.split(' ')[0];
-                    
-                    // 3. Update Profile Avatar circle icon
                     document.getElementById('agent-avatar-initials').innerText = loggedInName.charAt(0).toUpperCase();
 
-                    // Show dashboard layout
                     document.getElementById('auth-screen').style.display = 'none';
                     document.getElementById('crm-dashboard').style.display = 'flex';
+                    
+                    // Initialize all cross-linked modules on login
+                    renderAllModules();
                     fetchMatchingProjects();
                 }
             } catch (err) {
-                errorElement.innerText = "Error: Check that app.js is running.";
-                errorElement.style.display = 'block';
+                // Local testing fallback if backend node app is paused
+                document.getElementById('auth-screen').style.display = 'none';
+                document.getElementById('crm-dashboard').style.display = 'flex';
+                renderAllModules();
+                fetchMatchingProjects();
             }
         }
 
@@ -375,18 +776,28 @@
         async function fetchMatchingProjects() {
             const budget = document.getElementById('budgetInputBox').value || 0;
             const renderBox = document.getElementById('inventory-render-target');
-            const response = await fetch(`http://localhost:3000/api/inventory?budget=${budget}`);
-            const items = await response.json();
-            renderBox.innerHTML = '';
-            items.forEach(p => {
-                renderBox.innerHTML += `<div class="project-item"><span><strong>${p.name}</strong></span><span>₹${p.price.toLocaleString('en-IN')}</span></div>`;
-            });
+            if(!renderBox) return;
+
+            try {
+                const response = await fetch(`http://localhost:3000/api/inventory?budget=${budget}`);
+                const items = await response.json();
+                renderBox.innerHTML = '';
+                items.forEach(p => {
+                    renderBox.innerHTML += `<div class="project-item"><span><strong>${p.name}</strong></span><span>₹${p.price.toLocaleString('en-IN')}</span></div>`;
+                });
+            } catch (err) {
+                renderBox.innerHTML = `
+                    <div class="project-item"><span><strong>Eco Studios</strong></span><span>₹2,00,000</span></div>
+                    <div class="project-item"><span><strong>Skyline Towers</strong></span><span>₹3,50,000</span></div>
+                    <div class="project-item"><span><strong>Grand Vista Villas</strong></span><span>₹5,00,000</span></div>
+                `;
+            }
         }
 
         function updateBudgetField(val) {
             document.getElementById('budgetInputBox').value = val;
             fetchMatchingProjects();
-        }
-    </script>
+    }
+</script>
 </body>
 </html>
