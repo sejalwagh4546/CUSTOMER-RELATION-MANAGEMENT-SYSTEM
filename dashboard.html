@@ -7,20 +7,20 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="min-h-screen flex">
+<body class="min-h-screen flex bg-[#0B0F19] text-slate-100">
 
+    <!-- SIDEBAR -->
     <aside class="w-64 border-r border-slate-900 bg-[#0B0F19] flex flex-col p-6 space-y-8">
         <div class="flex items-center space-x-3">
-    <div class="bg-purple-600/20 border border-purple-500/30 p-2 rounded-xl text-purple-400">
-        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M8 6 L17 10 L11 12.5 L17 15 L8 19 L14 12.5 Z" />
-        </svg>
-    </div>
-    <div>
-        <h2 class="text-sm font-bold text-white tracking-wide">SysInsight</h2>
-        <p class="text-[10px] text-slate-500">CRM Platform</p>
-    </div>
-</div>
+            <div class="bg-purple-600/20 border border-purple-500/30 p-2 rounded-xl text-purple-400">
+                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M8 6 L17 10 L11 12.5 L17 15 L8 19 L14 12.5 Z" />
+                </svg>
+            </div>
+            <div>
+                <h2 class="text-sm font-bold text-white tracking-wide">SysInsight</h2>
+                <p class="text-[10px] text-slate-500">CRM Platform</p>
+            </div>
         </div>
 
         <nav class="flex-1 space-y-6">
@@ -28,59 +28,67 @@
                 <span class="text-[10px] font-bold tracking-widest text-slate-600 uppercase">Main Menu</span>
                 <ul class="space-y-1 mt-3">
                     <li>
-                        <a href="#" class="flex items-center space-x-3 px-4 py-2.5 rounded-lg text-white bg-slate-800/60 border border-slate-700/30">
+                        <button onclick="switchView('dashboard')" id="nav-dashboard" class="w-full flex items-center space-x-3 px-4 py-2.5 rounded-lg text-white bg-slate-800/60 border border-slate-700/30 transition">
                             <svg class="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2v-4zM14 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2v-4z"></path></svg>
                             <span class="text-sm font-medium">Dashboard</span>
-                        </a>
+                        </button>
                     </li>
                     <li>
-                        <a href="#" class="flex items-center space-x-3 px-4 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-900 transition">
+                        <button class="w-full flex items-center space-x-3 px-4 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-900 transition">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
                             <span class="text-sm font-medium">Leads</span>
-                        </a>
+                        </button>
                     </li>
                     <li>
-                        <a href="#" class="flex items-center space-x-3 px-4 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-900 transition">
+                        <button class="w-full flex items-center space-x-3 px-4 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-900 transition">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
                             <span class="text-sm font-medium">Contacts</span>
-                        </a>
+                        </button>
                     </li>
                     <li>
-                        <a href="#" class="flex items-center space-x-3 px-4 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-900 transition">
+                        <button class="w-full flex items-center space-x-3 px-4 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-900 transition">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
                             <span class="text-sm font-medium">Companies</span>
-                        </a>
+                        </button>
+                    </li>
+                    <li>
+                        <button onclick="switchView('tasks')" id="nav-tasks" class="w-full flex items-center space-x-3 px-4 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-900 transition">
+                            <svg class="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path></svg>
+                            <span class="text-sm font-medium">Tasks</span>
+                        </button>
                     </li>
                 </ul>
             </div>
         </nav>
 
         <div class="pt-4 border-t border-slate-900">
-            <button id="logoutBtn" class="flex items-center space-x-3 px-4 py-2 w-full text-red-400 hover:bg-red-500/10 rounded-lg transition text-sm">
+            <button id="logoutBtn" onclick="performLogout()" class="flex items-center space-x-3 px-4 py-2 w-full text-red-400 hover:bg-red-500/10 rounded-lg transition text-sm">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
                 <span>Logout</span>
             </button>
         </div>
     </aside>
 
-    <main class="flex-1 flex flex-col p-8 overflow-y-auto">
+    <!-- MAIN DASHBOARD CONTENT -->
+    <main class="flex-1 flex flex-col p-8 overflow-y-auto space-y-8">
         
-        <header class="flex justify-between items-center mb-8">
+        <!-- HEADER -->
+        <header class="flex justify-between items-center">
             <div class="relative w-80">
-                <input type="text" class="w-full custom-input px-4 py-2 rounded-lg text-sm" placeholder="Search leads...">
+                <input type="text" class="w-full custom-input px-4 py-2 rounded-lg text-sm bg-slate-900 border border-slate-800 text-white focus:outline-none focus:border-purple-500" placeholder="Search leads...">
             </div>
 
             <div class="flex items-center space-x-6">
                 <div class="text-right">
-                    <p class="text-xs text-slate-500" id="current-date">Friday, Jul 17, 2026</p>
-                    <p class="text-sm font-bold text-white" id="current-time">12:00:00 AM</p>
+                    <p class="text-xs text-slate-500" id="current-date"></p>
+                    <p class="text-sm font-bold text-white" id="current-time"></p>
                 </div>
 
                 <div class="flex items-center space-x-3 border-l border-slate-800 pl-6">
-                    <img class="w-9 h-9 rounded-full border border-purple-500/30" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=100" alt="Arjun Sharma">
+                    <div id="user-avatar" class="w-9 h-9 rounded-full bg-purple-600/30 border border-purple-500/50 flex items-center justify-center font-bold text-purple-300 text-sm">M</div>
                     <div>
-                        <p class="text-sm font-bold text-white">Arjun Sharma</p>
-                        <p class="text-[10px] text-slate-500">Sales Manager</p>
+                        <p class="text-sm font-bold text-white" id="user-profile-name">MAHI</p>
+                        <p class="text-[10px] text-slate-500">Sales Agent</p>
                     </div>
                 </div>
 
@@ -90,9 +98,10 @@
             </div>
         </header>
 
-        <section class="glass-card rounded-2xl p-8 mb-8 relative overflow-hidden flex justify-between items-center">
+        <!-- WELCOME BANNER -->
+        <section id="banner-section" class="glass-card rounded-2xl p-8 relative overflow-hidden flex justify-between items-center bg-slate-900/50 border border-slate-800">
             <div class="space-y-4">
-                <h1 class="text-4xl font-extrabold text-white">Good Morning, Arjun</h1>
+                <h1 class="text-4xl font-extrabold text-white">Good Morning, <span id="user-greeting-name">MAHI</span> 👋</h1>
                 <p class="text-slate-400 text-sm">Here's an overview of your CRM performance today.</p>
                 <div class="flex space-x-3 pt-2">
                     <span class="bg-slate-900 border border-slate-800 px-3 py-1.5 rounded-lg text-xs text-slate-300"><strong>38</strong> Active Deals</span>
@@ -107,8 +116,9 @@
             </div>
         </section>
 
-        <section class="grid grid-cols-1 md:grid-cols-4 gap-6">
-            <div class="glass-card rounded-2xl p-6 space-y-4">
+        <!-- METRICS CARDS -->
+        <section id="metrics-section" class="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div class="glass-card rounded-2xl p-6 space-y-4 bg-slate-900/50 border border-slate-800">
                 <div class="flex justify-between items-center">
                     <span class="text-xs font-semibold text-slate-400">Total Leads</span>
                     <span class="text-[10px] bg-green-500/10 text-green-400 px-2 py-0.5 rounded">+12.4%</span>
@@ -117,7 +127,7 @@
                 <p class="text-[10px] text-slate-500">vs last month</p>
             </div>
 
-            <div class="glass-card rounded-2xl p-6 space-y-4">
+            <div class="glass-card rounded-2xl p-6 space-y-4 bg-slate-900/50 border border-slate-800">
                 <div class="flex justify-between items-center">
                     <span class="text-xs font-semibold text-slate-400">Qualified Leads</span>
                     <span class="text-[10px] bg-green-500/10 text-green-400 px-2 py-0.5 rounded">+8.1%</span>
@@ -126,7 +136,7 @@
                 <p class="text-[10px] text-slate-500">vs last month</p>
             </div>
 
-            <div class="glass-card rounded-2xl p-6 space-y-4">
+            <div class="glass-card rounded-2xl p-6 space-y-4 bg-slate-900/50 border border-slate-800">
                 <div class="flex justify-between items-center">
                     <span class="text-xs font-semibold text-slate-400">New Leads Today</span>
                     <span class="text-[10px] bg-purple-500/10 text-purple-400 px-2 py-0.5 rounded">+34%</span>
@@ -135,7 +145,7 @@
                 <p class="text-[10px] text-slate-500">vs last month</p>
             </div>
 
-            <div class="glass-card rounded-2xl p-6 space-y-4">
+            <div class="glass-card rounded-2xl p-6 space-y-4 bg-slate-900/50 border border-slate-800">
                 <div class="flex justify-between items-center">
                     <span class="text-xs font-semibold text-slate-400">Follow-ups Due</span>
                     <span class="text-[10px] bg-yellow-500/10 text-yellow-500 px-2 py-0.5 rounded font-bold">DUE</span>
@@ -145,8 +155,239 @@
             </div>
         </section>
 
+        <!-- MY ACTION ITEMS / TASKS SECTION -->
+        <section id="tasks-section" class="glass-card rounded-2xl p-6 bg-slate-900/50 border border-slate-800">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-lg font-bold text-white">My Action Items</h3>
+                <button onclick="openTaskModal()" class="bg-purple-600 hover:bg-purple-500 text-white font-semibold text-xs px-4 py-2.5 rounded-lg transition shadow-lg shadow-purple-600/20">
+                    + Add Task
+                </button>
+            </div>
+            
+            <div id="task-items-container" class="space-y-3">
+                <!-- Dynamically rendered -->
+            </div>
+        </section>
+
     </main>
 
-    <script src="app.js"></script>
+    <!-- TASK ADD / EDIT MODAL -->
+    <div id="task-modal" class="fixed inset-0 bg-black/70 hidden justify-center items-center z-50 p-4">
+        <div class="bg-[#0B0F19] border border-slate-800 w-full max-w-md rounded-2xl p-6 space-y-5">
+            <div class="flex justify-between items-center">
+                <h3 id="modal-title" class="text-base font-bold text-white">Add New Task</h3>
+                <button onclick="closeTaskModal()" class="text-slate-400 hover:text-white text-lg">✕</button>
+            </div>
+            
+            <input type="hidden" id="task-edit-id" value="">
+
+            <div class="space-y-2">
+                <label class="text-xs font-medium text-slate-400">Task Details</label>
+                <input type="text" id="task-text-inp" class="w-full px-4 py-2.5 rounded-lg text-sm bg-slate-900 border border-slate-800 text-white focus:outline-none focus:border-purple-500" placeholder="e.g. Call client regarding quote">
+            </div>
+
+            <div class="space-y-2">
+                <label class="text-xs font-medium text-slate-400">Status / Priority</label>
+                <select id="task-status-inp" class="w-full px-4 py-2.5 rounded-lg text-sm bg-slate-900 border border-slate-800 text-white focus:outline-none focus:border-purple-500 cursor-pointer">
+                    <option value="Due Today">Due Today</option>
+                    <option value="Due Tomorrow">Due Tomorrow</option>
+                    <option value="Due Soon">Due Soon</option>
+                    <option value="Completed">Completed</option>
+                </select>
+            </div>
+
+            <div class="flex space-x-3 pt-2">
+                <button onclick="closeTaskModal()" class="flex-1 py-2.5 text-xs font-medium text-slate-400 border border-slate-800 rounded-lg hover:bg-slate-900 transition">Cancel</button>
+                <button onclick="saveTask()" class="flex-1 py-2.5 text-xs font-medium bg-purple-600 text-white rounded-lg hover:bg-purple-500 transition">Save Task</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPT -->
+    <script>
+        // Store tasks in LocalStorage so edits/additions persist across logins
+        window.crmData = {
+            tasks: JSON.parse(localStorage.getItem('crm_tasks')) || [
+                { id: 1, text: "Follow up with Rohan Mehta regarding Grand Vista Villas price quote", status: "Completed" },
+                { id: 2, text: "Send property layout PDF to Priya Patel", status: "Due Today" },
+                { id: 3, text: "Schedule site visit for Ananya Verma at Skyline Towers", status: "Due Tomorrow" }
+            ]
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const storedUser = localStorage.getItem('currentUser');
+            let agentName = "MAHI";
+
+            if (storedUser) {
+                try {
+                    const user = JSON.parse(storedUser);
+                    if (user.name) agentName = user.name;
+                } catch(e) {}
+            }
+
+            const profileNameEl = document.getElementById('user-profile-name');
+            const greetingNameEl = document.getElementById('user-greeting-name');
+            const avatarEl = document.getElementById('user-avatar');
+
+            if (profileNameEl) profileNameEl.innerText = agentName;
+            if (greetingNameEl) greetingNameEl.innerText = agentName.split(' ')[0];
+            if (avatarEl) avatarEl.innerText = agentName.charAt(0).toUpperCase();
+
+            updateClock();
+            setInterval(updateClock, 1000);
+
+            renderTaskList();
+        });
+
+        function updateClock() {
+            const now = new Date();
+            const dateEl = document.getElementById('current-date');
+            const timeEl = document.getElementById('current-time');
+            if (dateEl) dateEl.innerText = now.toLocaleDateString('en-GB');
+            if (timeEl) timeEl.innerText = now.toLocaleTimeString();
+        }
+
+        function switchView(viewName) {
+            const banner = document.getElementById('banner-section');
+            const metrics = document.getElementById('metrics-section');
+            const tasks = document.getElementById('tasks-section');
+
+            const navDash = document.getElementById('nav-dashboard');
+            const navTasks = document.getElementById('nav-tasks');
+
+            if (viewName === 'tasks') {
+                if (banner) banner.style.display = 'none';
+                if (metrics) metrics.style.display = 'none';
+                if (tasks) tasks.style.display = 'block';
+
+                if (navTasks) navTasks.className = "w-full flex items-center space-x-3 px-4 py-2.5 rounded-lg text-white bg-slate-800/60 border border-slate-700/30 transition";
+                if (navDash) navDash.className = "w-full flex items-center space-x-3 px-4 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-900 transition";
+            } else {
+                if (banner) banner.style.display = 'flex';
+                if (metrics) metrics.style.display = 'grid';
+                if (tasks) tasks.style.display = 'block';
+
+                if (navDash) navDash.className = "w-full flex items-center space-x-3 px-4 py-2.5 rounded-lg text-white bg-slate-800/60 border border-slate-700/30 transition";
+                if (navTasks) navTasks.className = "w-full flex items-center space-x-3 px-4 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-900 transition";
+            }
+        }
+
+        function saveTasksToStorage() {
+            localStorage.setItem('crm_tasks', JSON.stringify(crmData.tasks));
+        }
+
+        function renderTaskList() {
+            const taskContainer = document.getElementById('task-items-container');
+            if (!taskContainer) return;
+
+            if (!crmData.tasks || crmData.tasks.length === 0) {
+                taskContainer.innerHTML = `<p class="text-sm text-slate-500 py-4 text-center">No tasks found. Click "+ Add Task" to create one!</p>`;
+                return;
+            }
+
+            let html = '';
+            crmData.tasks.forEach(task => {
+                const isCompleted = task.status === 'Completed';
+                
+                let badgeColor = 'bg-blue-500/10 text-blue-400 border-blue-500/20';
+                if (isCompleted) badgeColor = 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20';
+                if (task.status === 'Due Today') badgeColor = 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20';
+
+                html += `
+                    <div class="flex items-center justify-between bg-slate-900/80 border border-slate-800/80 p-4 rounded-xl hover:border-slate-700 transition">
+                        <div class="flex items-center space-x-3.5 flex-1 pr-4">
+                            <input type="checkbox" ${isCompleted ? 'checked' : ''} onchange="toggleTaskStatus(${task.id})" class="w-4 h-4 rounded border-slate-700 bg-slate-800 text-purple-600 focus:ring-purple-500 cursor-pointer">
+                            <span class="text-sm font-medium ${isCompleted ? 'line-through text-slate-500' : 'text-slate-200'}">${task.text}</span>
+                        </div>
+                        
+                        <div class="flex items-center space-x-3">
+                            <span class="text-[11px] font-semibold px-2.5 py-1 rounded-md border ${badgeColor}">${task.status}</span>
+                            <button onclick="editTask(${task.id})" title="Edit Task" class="text-slate-400 hover:text-purple-400 p-1 transition text-sm">
+                                ✏️
+                            </button>
+                            <button onclick="deleteTask(${task.id})" title="Delete Task" class="text-slate-400 hover:text-red-400 p-1 transition text-sm">
+                                🗑️
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+            taskContainer.innerHTML = html;
+        }
+
+        function toggleTaskStatus(taskId) {
+            const task = crmData.tasks.find(t => t.id === taskId);
+            if (task) {
+                task.status = task.status === 'Completed' ? 'Due Soon' : 'Completed';
+                saveTasksToStorage();
+                renderTaskList();
+            }
+        }
+
+        function openTaskModal() {
+            document.getElementById('modal-title').innerText = 'Add New Task';
+            document.getElementById('task-edit-id').value = '';
+            document.getElementById('task-text-inp').value = '';
+            document.getElementById('task-status-inp').value = 'Due Today';
+            document.getElementById('task-modal').style.display = 'flex';
+        }
+
+        function editTask(taskId) {
+            const task = crmData.tasks.find(t => t.id === taskId);
+            if (!task) return;
+
+            document.getElementById('modal-title').innerText = 'Edit Task';
+            document.getElementById('task-edit-id').value = task.id;
+            document.getElementById('task-text-inp').value = task.text;
+            document.getElementById('task-status-inp').value = task.status;
+            document.getElementById('task-modal').style.display = 'flex';
+        }
+
+        function closeTaskModal() {
+            document.getElementById('task-modal').style.display = 'none';
+        }
+
+        function saveTask() {
+            const editId = document.getElementById('task-edit-id').value;
+            const text = document.getElementById('task-text-inp').value.trim();
+            const status = document.getElementById('task-status-inp').value;
+
+            if (!text) {
+                alert('Please enter task details.');
+                return;
+            }
+
+            if (editId) {
+                const task = crmData.tasks.find(t => t.id == editId);
+                if (task) {
+                    task.text = text;
+                    task.status = status;
+                }
+            } else {
+                crmData.tasks.push({
+                    id: Date.now(),
+                    text: text,
+                    status: status
+                });
+            }
+
+            saveTasksToStorage();
+            renderTaskList();
+            closeTaskModal();
+        }
+
+        function deleteTask(taskId) {
+            if (confirm('Are you sure you want to delete this task?')) {
+                crmData.tasks = crmData.tasks.filter(t => t.id !== taskId);
+                saveTasksToStorage();
+                renderTaskList();
+            }
+        }
+
+        function performLogout() {
+            localStorage.removeItem('currentUser');
+            window.location.href = 'index.html';
+        }
+    </script>
 </body>
 </html>

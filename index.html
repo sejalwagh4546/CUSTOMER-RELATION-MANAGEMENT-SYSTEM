@@ -628,30 +628,127 @@ let isSignUpMode = false;
             });
         }
 
-        // 4. RENDER TASKS LIST
-        function renderTaskList() {
-            const taskContainer = document.getElementById('view-tasks');
-            if (!taskContainer) return;
+       // 4. RENDER TASKS LIST (FIXED WITH ADD, EDIT & DELETE)
+function renderTaskList() {
+    const taskContainer = document.getElementById('view-tasks');
+    if (!taskContainer) return;
 
-            const boardPanel = taskContainer.querySelector('.board-panel');
-            if (!boardPanel) return;
+    const boardPanel = taskContainer.querySelector('.board-panel');
+    if (!boardPanel) return;
 
-            let html = '<h3>My Action Items</h3>';
-            crmData.tasks.forEach(task => {
-                const badgeClass = task.status === 'Completed' ? 'badge-won' : 'badge-progress';
-                const isChecked = task.status === 'Completed' ? 'checked' : '';
-                html += `
-                    <div class="task-list-item">
-                        <div class="task-check">
-                            <input type="checkbox" ${isChecked} onchange="toggleTaskStatus(${task.id})">
-                            <span style="${isChecked ? 'text-decoration: line-through; opacity: 0.6;' : ''}">${task.text}</span>
-                        </div>
-                        <span class="badge ${badgeClass}">${task.status}</span>
+    // Header now includes the "+ Add Task" button
+    let html = `
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+            <h3 style="margin: 0;">My Action Items</h3>
+            <button onclick="openTaskModal()" style="background-color: #9333ea; color: white; border: none; padding: 6px 14px; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 12px;">
+                + Add Task
+            </button>
+        </div>
+    `;
+
+    if (!crmData.tasks || crmData.tasks.length === 0) {
+        html += `<p style="color: #64748b; font-size: 13px; text-align: center; padding: 12px 0;">No tasks found. Click "+ Add Task" above to create one!</p>`;
+    } else {
+        crmData.tasks.forEach(task => {
+            const badgeClass = task.status === 'Completed' ? 'badge-won' : 'badge-progress';
+            const isChecked = task.status === 'Completed' ? 'checked' : '';
+
+            // Rows now include Edit (✏️) and Delete (🗑️) buttons
+            html += `
+                <div class="task-list-item" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding: 10px; background: rgba(15, 23, 42, 0.6); border-radius: 8px;">
+                    <div class="task-check" style="display: flex; align-items: center; gap: 10px;">
+                        <input type="checkbox" ${isChecked} onchange="toggleTaskStatus(${task.id})">
+                        <span style="${isChecked ? 'text-decoration: line-through; opacity: 0.6;' : ''}">${task.text}</span>
                     </div>
-                `;
-            });
-            boardPanel.innerHTML = html;
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span class="badge ${badgeClass}">${task.status}</span>
+                        <button onclick="editTask(${task.id})" title="Edit Task" style="background: none; border: none; cursor: pointer; font-size: 14px;">✏️</button>
+                        <button onclick="deleteTask(${task.id})" title="Delete Task" style="background: none; border: none; cursor: pointer; font-size: 14px;">🗑️</button>
+                    </div>
+                </div>
+            `;
+        });
+    }
+
+    boardPanel.innerHTML = html;
+}
+// Helper functions for Adding, Editing, and Deleting tasks
+// OPEN ADD MODAL
+function openTaskModal() {
+    document.getElementById('modal-task-title').innerText = 'Add New Task';
+    document.getElementById('modal-task-id').value = '';
+    document.getElementById('modal-task-input').value = '';
+    document.getElementById('modal-task-status').value = 'Due Today';
+    document.getElementById('custom-task-modal').style.display = 'flex';
+}
+
+// OPEN EDIT MODAL
+function editTask(taskId) {
+    const task = crmData.tasks.find(t => t.id === taskId);
+    if (!task) return;
+
+    document.getElementById('modal-task-title').innerText = 'Edit Task';
+    document.getElementById('modal-task-id').value = task.id;
+    document.getElementById('modal-task-input').value = task.text;
+    document.getElementById('modal-task-status').value = task.status;
+    document.getElementById('custom-task-modal').style.display = 'flex';
+}
+
+function closeTaskModal() {
+    document.getElementById('custom-task-modal').style.display = 'none';
+}
+
+// SAVE TASK (ADD OR EDIT)
+function saveModalTask() {
+    const taskId = document.getElementById('modal-task-id').value;
+    const taskText = document.getElementById('modal-task-input').value.trim();
+    const taskStatus = document.getElementById('modal-task-status').value;
+
+    if (!taskText) {
+        document.getElementById('modal-task-input').style.borderColor = '#ef4444';
+        return;
+    }
+
+    if (taskId) {
+        // Edit existing task
+        const task = crmData.tasks.find(t => t.id == taskId);
+        if (task) {
+            task.text = taskText;
+            task.status = taskStatus;
         }
+    } else {
+        // Add new task
+        crmData.tasks.push({
+            id: Date.now(),
+            text: taskText,
+            status: taskStatus
+        });
+    }
+
+    if (typeof saveTasksToStorage === 'function') saveTasksToStorage();
+    renderTaskList();
+    closeTaskModal();
+}
+
+// OPEN DELETE MODAL
+function deleteTask(taskId) {
+    document.getElementById('delete-task-id').value = taskId;
+    document.getElementById('custom-delete-modal').style.display = 'flex';
+}
+
+function closeDeleteModal() {
+    document.getElementById('custom-delete-modal').style.display = 'none';
+}
+
+// CONFIRM DELETE
+function confirmDeleteTask() {
+    const taskId = document.getElementById('delete-task-id').value;
+    crmData.tasks = crmData.tasks.filter(t => t.id != taskId);
+
+    if (typeof saveTasksToStorage === 'function') saveTasksToStorage();
+    renderTaskList();
+    closeDeleteModal();
+}
 
         // MODAL & INTERACTION HANDLERS
         function openDealModal() {
@@ -712,61 +809,117 @@ let isSignUpMode = false;
                 renderTaskList();
             }
         }
+function toggleInterfaceMode() {
+    isSignUpMode = !isSignUpMode;
+    
+    const nameBox = document.getElementById('name-field-box');
+    const heading = document.getElementById('form-heading');
+    const submitBtn = document.getElementById('submit-auth-btn');
+    const toggleLink = document.getElementById('toggle-link-btn');
 
-        function toggleInterfaceMode() {
-            isSignUpMode = !isSignUpMode;
-            document.getElementById('name-field-box').style.display = isSignUpMode ? 'block' : 'none';
-            document.getElementById('form-heading').innerText = isSignUpMode ? "Create Agent Account" : "Welcome to SysInsight CRM";
+    if (isSignUpMode) {
+        nameBox.style.display = 'block';
+        heading.innerText = "Create Agent Account";
+        submitBtn.innerText = "Register Account →";
+        toggleLink.innerHTML = 'Already have an account? <span style="color:var(--accent-glow)">Sign In</span>';
+    } else {
+        nameBox.style.display = 'none';
+        heading.innerText = "Welcome to SysInsight CRM";
+        submitBtn.innerText = "Sign In →";
+        toggleLink.innerHTML = 'New CRM agent? <span style="color:var(--accent-glow)">Create an account</span>';
+    }
+}
+
+async function submitAuthData() {
+    const email = document.getElementById('inp-email').value.trim();
+    const password = document.getElementById('inp-pass').value.trim();
+    const name = document.getElementById('inp-name').value.trim();
+    const errorElement = document.getElementById('msg-err');
+
+    const urlPath = isSignUpMode ? 'signup' : 'login';
+
+    function updateAgentUI(agentName) {
+        if (!agentName) return;
+        // Format name (e.g., "sejal" -> "Sejal")
+        const formattedName = agentName.charAt(0).toUpperCase() + agentName.slice(1);
+        
+        document.getElementById('agent-label-name').innerText = formattedName;
+        document.getElementById('agent-display-title').innerText = formattedName.split(' ')[0];
+        document.getElementById('agent-avatar-initials').innerText = formattedName.charAt(0).toUpperCase();
+    }
+
+    // 1. IF USER IS CREATING AN ACCOUNT (SIGN UP MODE)
+    if (isSignUpMode) {
+        if (!name || !email || !password) {
+            errorElement.innerText = "Please fill in all fields (Name, Email, Password).";
+            errorElement.style.display = 'block';
+            return;
         }
 
-        async function submitAuthData() {
-            const email = document.getElementById('inp-email').value;
-            const password = document.getElementById('inp-pass').value;
-            const name = document.getElementById('inp-name').value;
-            const errorElement = document.getElementById('msg-err');
+        // Save account locally so name is remembered across sign in
+        const userAccounts = JSON.parse(localStorage.getItem('registeredUsers') || '{}');
+        userAccounts[email.toLowerCase()] = { name: name, password: password };
+        localStorage.setItem('registeredUsers', JSON.stringify(userAccounts));
 
-            const urlPath = isSignUpMode ? 'signup' : 'login';
-
-            try {
-                const response = await fetch(`http://localhost:3000/api/auth/${urlPath}`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email, password, name })
-                });
-
-                const data = await response.json();
-
-                if (!response.ok) {
-                    errorElement.innerText = data.message;
-                    errorElement.style.display = 'block';
-                    return;
-                }
-
-                if (isSignUpMode) {
-                    alert("Account registered successfully! Switching to login.");
-                    toggleInterfaceMode();
-                } else {
-                    const loggedInName = data.user.name; 
-                    
-                    document.getElementById('agent-label-name').innerText = loggedInName;
-                    document.getElementById('agent-display-title').innerText = loggedInName.split(' ')[0];
-                    document.getElementById('agent-avatar-initials').innerText = loggedInName.charAt(0).toUpperCase();
-
-                    document.getElementById('auth-screen').style.display = 'none';
-                    document.getElementById('crm-dashboard').style.display = 'flex';
-                    
-                    // Initialize all cross-linked modules on login
-                    renderAllModules();
-                    fetchMatchingProjects();
-                }
-            } catch (err) {
-                // Local testing fallback if backend node app is paused
-                document.getElementById('auth-screen').style.display = 'none';
-                document.getElementById('crm-dashboard').style.display = 'flex';
-                renderAllModules();
-                fetchMatchingProjects();
-            }
+        try {
+            await fetch(`http://localhost:3000/api/auth/signup`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password, name })
+            });
+        } catch (e) {
+            console.log("Backend offline, relying on local storage registration.");
         }
+
+        alert(`Account registered for ${name}! Switching to login.`);
+        errorElement.style.display = 'none';
+        toggleInterfaceMode();
+        return;
+    }
+
+    // 2. IF USER IS LOGGING IN (SIGN IN MODE)
+    try {
+        const response = await fetch(`http://localhost:3000/api/auth/login`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.message || "Invalid Login");
+        }
+
+        const finalName = data.user ? data.user.name : getSavedName(email);
+        loginUserSuccess(finalName, email);
+
+    } catch (err) {
+        // Fallback: Check local storage for registered name
+        const finalName = getSavedName(email);
+        loginUserSuccess(finalName, email);
+    }
+
+    // Helper function to look up name by email
+    function getSavedName(userEmail) {
+        const userAccounts = JSON.parse(localStorage.getItem('registeredUsers') || '{}');
+        if (userAccounts[userEmail.toLowerCase()]) {
+            return userAccounts[userEmail.toLowerCase()].name;
+        }
+        return userEmail.split('@')[0] || "Agent";
+    }
+
+    // Helper function to trigger successful dashboard login
+    function loginUserSuccess(agentName, userEmail) {
+        updateAgentUI(agentName);
+        localStorage.setItem('currentUser', JSON.stringify({ name: agentName, email: userEmail }));
+
+        document.getElementById('auth-screen').style.display = 'none';
+        document.getElementById('crm-dashboard').style.display = 'flex';
+        renderAllModules();
+        fetchMatchingProjects();
+    }
+}
 
         function performLogout() {
             document.getElementById('crm-dashboard').style.display = 'none';
@@ -798,6 +951,81 @@ let isSignUpMode = false;
             document.getElementById('budgetInputBox').value = val;
             fetchMatchingProjects();
     }
+    if (data.success || response.ok) {
+    // Save user session
+    localStorage.setItem('currentUser', JSON.stringify(data.user));
+    
+    // Redirect to the dashboard page
+    window.location.href = 'dashboard.html';
+} else {
+    alert(data.message);
+}
+// Auto-login on page refresh if session exists
+window.addEventListener('DOMContentLoaded', () => {
+    const storedUser = localStorage.getItem('currentUser');
+    if (storedUser) {
+        const user = JSON.parse(storedUser);
+        
+        document.getElementById('agent-label-name').innerText = user.name;
+        document.getElementById('agent-display-title').innerText = user.name.split(' ')[0];
+        document.getElementById('agent-avatar-initials').innerText = user.name.charAt(0).toUpperCase();
+
+        document.getElementById('auth-screen').style.display = 'none';
+        document.getElementById('crm-dashboard').style.display = 'flex';
+        
+        renderAllModules();
+        fetchMatchingProjects();
+    }
+});
 </script>
+<!-- ADD / EDIT TASK MODAL -->
+<div id="custom-task-modal" style="display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.75); z-index: 9999; align-items: center; justify-content: center; backdrop-filter: blur(4px);">
+    <div style="background: #0f172a; border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; width: 100%; max-width: 440px; padding: 24px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); color: #f8fafc;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <h3 id="modal-task-title" style="margin: 0; font-size: 18px; font-weight: 700; color: #ffffff;">Add New Task</h3>
+            <button onclick="closeTaskModal()" style="background: none; border: none; color: #94a3b8; font-size: 18px; cursor: pointer;">✕</button>
+        </div>
+        
+        <input type="hidden" id="modal-task-id">
+
+        <div style="margin-bottom: 16px;">
+            <label style="display: block; font-size: 12px; font-weight: 600; color: #94a3b8; margin-bottom: 6px;">Task Description</label>
+            <input type="text" id="modal-task-input" placeholder="e.g. Schedule site visit with Rohan" style="width: 100%; padding: 10px 14px; background: #020617; border: 1px solid #1e293b; border-radius: 8px; color: #ffffff; font-size: 14px; box-sizing: border-box; outline: none;">
+        </div>
+
+        <div style="margin-bottom: 24px;">
+            <label style="display: block; font-size: 12px; font-weight: 600; color: #94a3b8; margin-bottom: 6px;">Status / Priority</label>
+            <select id="modal-task-status" style="width: 100%; padding: 10px 14px; background: #020617; border: 1px solid #1e293b; border-radius: 8px; color: #ffffff; font-size: 14px; box-sizing: border-box; outline: none; cursor: pointer;">
+                <option value="Due Today">Due Today</option>
+                <option value="Due Tomorrow">Due Tomorrow</option>
+                <option value="Due Soon">Due Soon</option>
+                <option value="Completed">Completed</option>
+            </select>
+        </div>
+
+        <div style="display: flex; gap: 12px;">
+            <button onclick="closeTaskModal()" style="flex: 1; padding: 10px; background: transparent; border: 1px solid #334155; border-radius: 8px; color: #94a3b8; font-size: 13px; font-weight: 600; cursor: pointer;">Cancel</button>
+            <button onclick="saveModalTask()" style="flex: 1; padding: 10px; background: #9333ea; border: none; border-radius: 8px; color: #ffffff; font-size: 13px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 14px rgba(147, 51, 234, 0.4);">Save Task</button>
+        </div>
+    </div>
+</div>
+
+<!-- DELETE CONFIRMATION MODAL -->
+<div id="custom-delete-modal" style="display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.75); z-index: 9999; align-items: center; justify-content: center; backdrop-filter: blur(4px);">
+    <div style="background: #0f172a; border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; width: 100%; max-width: 380px; padding: 24px; text-align: center; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); color: #f8fafc;">
+        <div style="width: 48px; height: 48px; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; color: #ef4444; font-size: 20px;">
+            🗑️
+        </div>
+        <h3 style="margin: 0 0 8px 0; font-size: 18px; font-weight: 700; color: #ffffff;">Delete Task?</h3>
+        <p style="margin: 0 0 24px 0; font-size: 13px; color: #94a3b8;">Are you sure you want to delete this task? This action cannot be undone.</p>
+        
+        <input type="hidden" id="delete-task-id">
+
+        <div style="display: flex; gap: 12px;">
+            <button onclick="closeDeleteModal()" style="flex: 1; padding: 10px; background: transparent; border: 1px solid #334155; border-radius: 8px; color: #94a3b8; font-size: 13px; font-weight: 600; cursor: pointer;">Cancel</button>
+            <button onclick="confirmDeleteTask()" style="flex: 1; padding: 10px; background: #ef4444; border: none; border-radius: 8px; color: #ffffff; font-size: 13px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 14px rgba(239, 68, 68, 0.4);">Delete</button>
+        </div>
+    </div>
+</div>
 </body>
 </html>
