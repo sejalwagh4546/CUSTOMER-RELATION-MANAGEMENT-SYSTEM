@@ -1123,16 +1123,13 @@ window.addEventListener('DOMContentLoaded', () => {
             <script src="leads.js"></script>
 </body>
             <!-- MODAL FOR ADDING NEW LEAD -->
-<div class="input-wrapper">
-    <label>Source</label>
-    <select id="lead-source-inp" class="auth-input" style="cursor: pointer;">
-        <option value="Google Form">Google Form</option>
-        <option value="Website">Website</option>
-        <option value="Referral">Referral</option>
-        <option value="Cold Call">Cold Call</option>
-        <option value="Other">Other</option>
-    </select>
-</div>
+<!-- MODAL FOR ADDING NEW LEAD (GOOGLE FORM OPTION) -->
+<div id="lead-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); justify-content: center; align-items: center; z-index: 1000;">
+    <div class="auth-card" style="max-width: 450px; background-color: var(--bg-card); border: 1px solid rgba(255,255,255,0.1);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <h3 style="margin: 0;">Add New Lead</h3>
+            <span style="cursor: pointer; font-size: 20px; color: var(--text-secondary);" onclick="closeLeadModal()">✕</span>
+        </div>
         
         <div class="input-wrapper">
             <label>Lead Name</label>
@@ -1142,10 +1139,14 @@ window.addEventListener('DOMContentLoaded', () => {
             <label>Email Address</label>
             <input type="email" id="lead-email-inp" class="auth-input" placeholder="e.g. rahul@example.com">
         </div>
+        
         <div class="input-wrapper">
             <label>Source</label>
-            <input type="text" id="lead-source-inp" class="auth-input" placeholder="e.g. Website / Referral">
+            <select id="lead-source-inp" class="auth-input" style="cursor: pointer;">
+                <option value="Google Form" selected>Google Form</option>
+            </select>
         </div>
+
         <div class="input-wrapper">
             <label>Status</label>
             <select id="lead-status-inp" class="auth-input" style="cursor: pointer;">
