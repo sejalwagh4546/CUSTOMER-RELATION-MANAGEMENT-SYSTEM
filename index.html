@@ -1122,4 +1122,29 @@ window.addEventListener('DOMContentLoaded', () => {
 </div>
             <script src="leads.js"></script>
 </body>
+            <script>
+    function switchTab(element, viewId) {
+        // 1. Remove active style from all sidebar tabs
+        document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+        
+        // 2. Highlight the tab that was clicked
+        if (element) {
+            element.classList.add('active');
+        }
+
+        // 3. Hide all view sections
+        document.querySelectorAll('.view-section').forEach(view => view.classList.remove('active-view'));
+        
+        // 4. Show the section corresponding to the clicked tab
+        const targetView = document.getElementById(viewId);
+        if (targetView) {
+            targetView.classList.add('active-view');
+        }
+
+        // 5. AUTOMATICALLY FETCH LEADS WHEN SWITCHING TABS
+        if (typeof fetchFormLeads === 'function') {
+            fetchFormLeads();
+        }
+    }
+</script>
 </html>
