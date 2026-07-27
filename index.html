@@ -1163,44 +1163,35 @@ window.addEventListener('DOMContentLoaded', () => {
     </div>
 </div>
             <script>
-    function switchTab(element, viewId) {
-        // 1. Remove active style from all sidebar tabs
-        document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-        
-        // 2. Highlight the tab that was clicked
-        if (element) {
-            element.classList.add('active');
-        }
+   // 1. Function to switch tabs & trigger fetchFormLeads automatically
+function switchTab(element, viewId) {
+    document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+    if (element) element.classList.add('active');
 
-        // 3. Hide all view sections
-        document.querySelectorAll('.view-section').forEach(view => view.classList.remove('active-view'));
-        
-        // 4. Show the section corresponding to the clicked tab
-        const targetView = document.getElementById(viewId);
-        if (targetView) {
-            targetView.classList.add('active-view');
-        }
+    document.querySelectorAll('.view-section').forEach(view => view.classList.remove('active-view'));
+    const targetView = document.getElementById(viewId);
+    if (targetView) targetView.classList.add('active-view');
 
-        // 5. AUTOMATICALLY FETCH LEADS WHEN SWITCHING TABS
-        if (typeof fetchFormLeads === 'function') {
-            fetchFormLeads();
-        }
+    // Automatically trigger fetchFormLeads when switching tabs
+    if (typeof fetchFormLeads === 'function') {
+        fetchFormLeads();
     }
-    // Open Lead Modal
+}
+
+// 2. Open and Close modal functions for "+ Add New Lead"
 function openLeadModal() {
     document.getElementById('lead-modal').style.display = 'flex';
 }
 
-// Close Lead Modal
 function closeLeadModal() {
     document.getElementById('lead-modal').style.display = 'none';
 }
 
-// Submit New Lead
+// 3. Submit function for adding Google Form leads
 function addNewLead() {
     const name = document.getElementById('lead-name-inp').value;
     const email = document.getElementById('lead-email-inp').value;
-    const source = document.getElementById('lead-source-inp').value; // Will grab "Google Form" if selected
+    const source = document.getElementById('lead-source-inp').value; // Always "Google Form"
     const status = document.getElementById('lead-status-inp').value;
 
     if (!name || !email) {
@@ -1210,7 +1201,6 @@ function addNewLead() {
 
     const newLead = { name, email, source, status };
 
-    // Post lead to backend API
     fetch('/api/leads', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -1219,12 +1209,9 @@ function addNewLead() {
     .then(response => response.json())
     .then(data => {
         closeLeadModal();
-
-        // Clear input fields
         document.getElementById('lead-name-inp').value = '';
         document.getElementById('lead-email-inp').value = '';
 
-        // Refresh lead table automatically
         if (typeof fetchFormLeads === 'function') {
             fetchFormLeads();
         }
