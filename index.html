@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="leads.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SysInsight CRM Platform</title>
@@ -168,8 +169,7 @@
                 <div class="nav-item-content"><span>🎛️</span> Dashboard</div>
                 <div class="active-dot"></div>
             </a>
-            
-            <a class="nav-item" onclick="switchTab(this, 'view-placeholder')">
+            <a class="nav-item" onclick="switchTab(this, 'view-leads')">
                 <div class="nav-item-content"><span>👥</span> Leads</div>
             </a>
             
@@ -504,6 +504,10 @@
                     </div>
                 </div>
             </div>
+            <!-- VIEW 5: LEADS SECTION -->
+<div id="view-leads" class="view-section">
+    <!-- leads.html content loads here automatically -->
+</div>
 
             <!-- PLACEHOLDER FOR FRIEND'S PARTS -->
             <div id="view-placeholder" class="view-section">
@@ -541,22 +545,50 @@ let isSignUpMode = false;
         }, 1000);
 
         // Sidebar Navigation Switcher
-        function switchTab(element, viewId) {
-            document.querySelectorAll('.nav-item').forEach(item => {
-                item.classList.remove('active');
-                const dot = item.querySelector('.active-dot');
-                if(dot) dot.remove();
-            });
+function switchTab(element, viewId) {
+    document.querySelectorAll('.nav-item').forEach(item => {
+        item.classList.remove('active');
+        const dot = item.querySelector('.active-dot');
+        if (dot) dot.remove();
+    });
 
-            element.classList.add('active');
-            element.innerHTML += '<div class="active-dot"></div>';
+    element.classList.add('active');
+    element.innerHTML += '<div class="active-dot"></div>';
 
-            document.querySelectorAll('.view-section').forEach(view => {
-                view.classList.remove('active-view');
-            });
-            
-            document.getElementById(viewId).classList.add('active-view');
+    document.querySelectorAll('.view-section').forEach(view => {
+        view.classList.remove('active-view');
+    });
+
+    const targetView = document.getElementById(viewId);
+    if (targetView) {
+        targetView.classList.add('active-view');
+    }
+
+    // Dynamic fetch for Leads module when selected
+    if (viewId === 'view-leads') {
+        const leadsContainer = document.getElementById('view-leads');
+        if (leadsContainer && leadsContainer.innerHTML.trim() === '') {
+            fetch('leads.html')
+                .then(res => res.text())
+                .then(html => {
+                    leadsContainer.innerHTML = html;
+                    
+                    // Load leads.js script dynamically
+                    if (!document.getElementById('leads-script')) {
+                        const script = document.createElement('script');
+                        script.id = 'leads-script';
+                        script.src = 'leads.js';
+                        document.body.appendChild(script);
+                    } else if (typeof fetchFormLeads === 'function') {
+                        fetchFormLeads();
+                    }
+                })
+                .catch(err => console.error('Error loading leads.html:', err));
+        } else if (typeof fetchFormLeads === 'function') {
+            fetchFormLeads();
         }
+    }
+}
 
         // --- MASTER RENDER FUNCTION (LINKS ALL MODULES) ---
         function renderAllModules() {
