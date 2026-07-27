@@ -1122,6 +1122,41 @@ window.addEventListener('DOMContentLoaded', () => {
 </div>
             <script src="leads.js"></script>
 </body>
+            <!-- MODAL FOR ADDING NEW LEAD -->
+<div id="lead-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); justify-content: center; align-items: center; z-index: 1000;">
+    <div class="auth-card" style="max-width: 450px; background-color: var(--bg-card); border: 1px solid rgba(255,255,255,0.1);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <h3 style="margin: 0;">Add New Lead</h3>
+            <span style="cursor: pointer; font-size: 20px; color: var(--text-secondary);" onclick="closeLeadModal()">✕</span>
+        </div>
+        
+        <div class="input-wrapper">
+            <label>Lead Name</label>
+            <input type="text" id="lead-name-inp" class="auth-input" placeholder="e.g. Rahul Sharma">
+        </div>
+        <div class="input-wrapper">
+            <label>Email Address</label>
+            <input type="email" id="lead-email-inp" class="auth-input" placeholder="e.g. rahul@example.com">
+        </div>
+        <div class="input-wrapper">
+            <label>Source</label>
+            <input type="text" id="lead-source-inp" class="auth-input" placeholder="e.g. Website / Referral">
+        </div>
+        <div class="input-wrapper">
+            <label>Status</label>
+            <select id="lead-status-inp" class="auth-input" style="cursor: pointer;">
+                <option value="New">New</option>
+                <option value="Contacted">Contacted</option>
+                <option value="Qualified">Qualified</option>
+            </select>
+        </div>
+
+        <div style="display: flex; gap: 10px; margin-top: 15px;">
+            <button class="auth-btn" style="background-color: transparent; border: 1px solid var(--text-secondary);" onclick="closeLeadModal()">Cancel</button>
+            <button class="auth-btn" onclick="addNewLead()">Save Lead</button>
+        </div>
+    </div>
+</div>
             <script>
     function switchTab(element, viewId) {
         // 1. Remove active style from all sidebar tabs
