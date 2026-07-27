@@ -1191,32 +1191,35 @@ function closeLeadModal() {
 function addNewLead() {
     const name = document.getElementById('lead-name-inp').value;
     const email = document.getElementById('lead-email-inp').value;
-    const source = document.getElementById('lead-source-inp').value; // Always "Google Form"
+    const source = document.getElementById('lead-source-inp').value;
     const status = document.getElementById('lead-status-inp').value;
 
+    // Check if fields are empty
     if (!name || !email) {
         alert('Please fill in both Name and Email.');
         return;
     }
 
-    const newLead = { name, email, source, status };
+    // Find the table where leads are listed
+    const tableBody = document.querySelector('tbody'); 
 
-    fetch('/api/leads', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(newLead)
-    })
-    .then(response => response.json())
-    .then(data => {
-        closeLeadModal();
-        document.getElementById('lead-name-inp').value = '';
-        document.getElementById('lead-email-inp').value = '';
+    if (tableBody) {
+        // Create a new row
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td><strong>${name}</strong></td>
+            <td>${email}</td>
+            <td>${source}</td>
+            <td>${status}</td>
+        `;
+        // Add it to the top of your table
+        tableBody.prepend(row);
+    }
 
-        if (typeof fetchFormLeads === 'function') {
-            fetchFormLeads();
-        }
-    })
-    .catch(err => console.error('Error adding lead:', err));
+    // Close the modal and reset inputs
+    closeLeadModal();
+    document.getElementById('lead-name-inp').value = '';
+    document.getElementById('lead-email-inp').value = '';
 }
 </script>
 </html>
