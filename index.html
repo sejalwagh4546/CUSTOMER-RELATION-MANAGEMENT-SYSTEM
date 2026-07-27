@@ -506,19 +506,60 @@
             </div>
             <!-- VIEW 5: LEADS SECTION -->
 <div id="view-leads" class="view-section">
-    <!-- leads.html content loads here automatically -->
-</div>
+    <!-- Leads Welcome Header -->
+    <div class="welcome-card" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <div class="welcome-text">
+            <h2 style="margin: 0 0 6px 0; font-size: 1.5rem;">Leads Overview ⚡</h2>
+            <p style="margin: 0; color: var(--text-secondary); font-size: 0.9rem;">Manage, track, and assign incoming prospective clients for SysInsight CRM.</p>
+        </div>
+        <button class="auth-btn" style="width: auto; padding: 10px 20px; margin: 0;" onclick="openLeadModal()">+ Add New Lead</button>
+    </div>
 
-            <!-- PLACEHOLDER FOR FRIEND'S PARTS -->
-            <div id="view-placeholder" class="view-section">
-                <div class="board-panel" style="text-align: center; padding: 50px;">
-                    <h3>Section Under Development</h3>
-                    <p style="color: var(--text-secondary);">Your teammate is building this section!</p>
-                </div>
-            </div>
-
+    <!-- Leads Stats Grid -->
+    <div class="stats-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 20px;">
+        <div class="board-panel" style="padding: 20px;">
+            <span style="display: block; color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 8px;">Total Leads</span>
+            <span style="font-size: 1.8rem; font-weight: 700;" id="statTotal">0</span>
+        </div>
+        <div class="board-panel" style="padding: 20px;">
+            <span style="display: block; color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 8px;">New Leads</span>
+            <span style="font-size: 1.8rem; font-weight: 700; color: var(--accent-glow);" id="statNew">0</span>
+        </div>
+        <div class="board-panel" style="padding: 20px;">
+            <span style="display: block; color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 8px;">In Contact</span>
+            <span style="font-size: 1.8rem; font-weight: 700; color: #f59e0b;" id="statContacted">0</span>
+        </div>
+        <div class="board-panel" style="padding: 20px;">
+            <span style="display: block; color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 8px;">Qualified</span>
+            <span style="font-size: 1.8rem; font-weight: 700; color: var(--neon-green);" id="statQualified">0</span>
         </div>
     </div>
+
+    <!-- Leads Table Panel -->
+    <div class="board-panel">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <h3 style="margin: 0;">All Leads</h3>
+            <input type="text" id="searchInput" class="filter-input" style="width: 260px;" placeholder="Search lead by name or email..." oninput="filterLeadsTable()" />
+        </div>
+
+        <div style="overflow-x: auto;">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>LEAD NAME</th>
+                        <th>EMAIL</th>
+                        <th>SOURCE</th>
+                        <th>STATUS</th>
+                        <th>ACTIONS</th>
+                    </tr>
+                </thead>
+                <tbody id="leadsTableBody">
+                    <!-- Populated dynamically via Google Form API -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 
     <script>
 let isSignUpMode = false;
