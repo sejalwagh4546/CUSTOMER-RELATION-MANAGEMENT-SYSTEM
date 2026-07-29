@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <link rel="stylesheet" href="leads.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -194,9 +196,9 @@
                 <div class="nav-item-content"><span>☑️</span> Tasks</div>
             </a>
             
-           <a class="nav-item" onclick="switchTab(this, 'view-reports')">
-    <div class="nav-item-content"><span>📊</span> Reports</div>
-</a>
+            <a class="nav-item" onclick="switchTab(this, 'view-reports')">
+                <div class="nav-item-content"><span>📊</span> Reports</div>
+            </a>
             
             <a class="nav-item" onclick="switchTab(this, 'view-placeholder')">
                 <div class="nav-item-content"><span>🛠️</span> Sales Team</div>
@@ -270,7 +272,7 @@
                 </div>
             </div>
 
- <!-- VIEW 2: DEALS SECTION WITH FUNCTIONAL MODAL -->
+            <!-- VIEW 2: DEALS SECTION WITH FUNCTIONAL MODAL -->
             <div id="view-deals" class="view-section">
                 <div class="board-panel">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
@@ -353,8 +355,8 @@
                     </div>
                 </div>
             </div>
-            <!-- VIEW 3: CALENDAR SECTION -->
-<!-- VIEW 3: FULL MONTH CALENDAR WITH TASKS -->
+
+            <!-- VIEW 3: FULL MONTH CALENDAR WITH TASKS -->
             <div id="view-calendar" class="view-section">
                 <div class="board-panel">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
@@ -462,7 +464,7 @@
                         <div class="cal-day-cell"><span class="day-num">21</span></div>
                         <div class="cal-day-cell"><span class="day-num">22</span><div class="task-chip task-blue">Property Visit</div></div>
                         <div class="cal-day-cell"><span class="day-num">23</span></div>
-                        <div class="cal-day-cell today-cell"><span class="day-num">24 (Today)</span><div class="task-chip task-purple">Contract Review</div><div class="task-chip task-green">Payment Due</div></div>
+                        <div class="cal-day-cell today-cell"><span class="day-num">28 (Today)</span><div class="task-chip task-purple">Contract Review</div><div class="task-chip task-green">Payment Due</div></div>
                         <div class="cal-day-cell"><span class="day-num">25</span></div>
                         <div class="cal-day-cell"><span class="day-num">26</span></div>
 
@@ -478,861 +480,684 @@
             </div>
 
             <!-- VIEW 4: TASKS SECTION -->
+            <!-- VIEW 4: TASKS SECTION WITH ADD/DELETE TASKS -->
             <div id="view-tasks" class="view-section">
                 <div class="board-panel">
-                    <h3>My Action Items</h3>
-                    <div class="task-list-item">
-                        <div class="task-check">
-                            <input type="checkbox" checked>
-                            <span>Follow up with Rohan Mehta regarding Grand Vista Villas price quote</span>
-                        </div>
-                        <span class="badge badge-won">Completed</span>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <h3 style="margin: 0;">My Action Items</h3>
                     </div>
-                    <div class="task-list-item">
-                        <div class="task-check">
-                            <input type="checkbox">
-                            <span>Send property layout PDF to Priya Patel</span>
-                        </div>
-                        <span class="badge badge-progress">Due Today</span>
+
+                    <!-- ADD TASK FORM -->
+                    <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                        <input type="text" id="new-task-text" class="auth-input" placeholder="Enter task description..." style="flex: 1;">
+                        <select id="new-task-status" class="auth-input" style="width: 160px; cursor: pointer;">
+                            <option value="Due Today">Due Today</option>
+                            <option value="Due Tomorrow">Due Tomorrow</option>
+                        </select>
+                        <button class="auth-btn" style="width: auto; padding: 0 20px; margin-top: 0; white-space: nowrap;" onclick="addNewTask()">+ Add Task</button>
                     </div>
-                    <div class="task-list-item">
-                        <div class="task-check">
-                            <input type="checkbox">
-                            <span>Schedule site visit for Ananya Verma at Skyline Towers</span>
+
+                    <!-- TASK LIST CONTAINER -->
+                    <div id="tasks-container">
+                        <div class="task-list-item" id="task-1">
+                            <div class="task-check">
+                                <input type="checkbox" checked onchange="toggleTaskStatus(this)">
+                                <span style="text-decoration: line-through; color: var(--text-secondary);">Follow up with Rohan Mehta regarding Grand Vista Villas price quote</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 12px;">
+                                <span class="badge badge-won">Completed</span>
+                                <button onclick="deleteTask('task-1')" style="background: none; border: none; color: var(--neon-red); cursor: pointer; font-size: 16px;" title="Delete Task">🗑️</button>
+                            </div>
                         </div>
-                        <span class="badge badge-progress">Due Tomorrow</span>
+
+                        <div class="task-list-item" id="task-2">
+                            <div class="task-check">
+                                <input type="checkbox" onchange="toggleTaskStatus(this)">
+                                <span>Send property layout PDF to Priya Patel</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 12px;">
+                                <span class="badge badge-progress">Due Today</span>
+                                <button onclick="deleteTask('task-2')" style="background: none; border: none; color: var(--neon-red); cursor: pointer; font-size: 16px;" title="Delete Task">🗑️</button>
+                            </div>
+                        </div>
+
+                        <div class="task-list-item" id="task-3">
+                            <div class="task-check">
+                                <input type="checkbox" onchange="toggleTaskStatus(this)">
+                                <span>Schedule site visit for Ananya Verma at Skyline Towers</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 12px;">
+                                <span class="badge badge-progress">Due Tomorrow</span>
+                                <button onclick="deleteTask('task-3')" style="background: none; border: none; color: var(--neon-red); cursor: pointer; font-size: 16px;" title="Delete Task">🗑️</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+
+
             <!-- VIEW 5: LEADS SECTION -->
-<div id="view-leads" class="view-section">
-    <!-- Leads Welcome Header -->
-    <div class="welcome-card" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-        <div class="welcome-text">
-            <h2 style="margin: 0 0 6px 0; font-size: 1.5rem;">Leads Overview ⚡</h2>
-            <p style="margin: 0; color: var(--text-secondary); font-size: 0.9rem;">Manage, track, and assign incoming prospective clients for SysInsight CRM.</p>
-        </div>
-        <button class="auth-btn" style="width: auto; padding: 10px 20px; margin: 0;" onclick="openLeadModal()">+ Add New Lead</button>
-    </div>
+            <div id="view-leads" class="view-section">
+                <!-- Leads Welcome Header -->
+                <div class="welcome-card" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <div class="welcome-text">
+                        <h2 style="margin: 0 0 6px 0; font-size: 1.5rem;">Leads Overview ⚡</h2>
+                        <p style="margin: 0; color: var(--text-secondary); font-size: 0.9rem;">Manage, track, and assign incoming prospective clients for SysInsight CRM.</p>
+                    </div>
+                    <button class="auth-btn" style="width: auto; padding: 10px 20px; margin: 0;" onclick="openLeadModal()">+ Add New Lead</button>
+                </div>
 
-    <!-- Leads Stats Grid -->
-    <div class="stats-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 20px;">
-        <div class="board-panel" style="padding: 20px;">
-            <span style="display: block; color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 8px;">Total Leads</span>
-            <span style="font-size: 1.8rem; font-weight: 700;" id="statTotal">0</span>
-        </div>
-        <div class="board-panel" style="padding: 20px;">
-            <span style="display: block; color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 8px;">New Leads</span>
-            <span style="font-size: 1.8rem; font-weight: 700; color: var(--accent-glow);" id="statNew">0</span>
-        </div>
-        <div class="board-panel" style="padding: 20px;">
-            <span style="display: block; color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 8px;">In Contact</span>
-            <span style="font-size: 1.8rem; font-weight: 700; color: #f59e0b;" id="statContacted">0</span>
-        </div>
-        <div class="board-panel" style="padding: 20px;">
-            <span style="display: block; color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 8px;">Qualified</span>
-            <span style="font-size: 1.8rem; font-weight: 700; color: var(--neon-green);" id="statQualified">0</span>
-        </div>
-    </div>
+                <!-- Leads Stats Grid -->
+                <div class="stats-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 20px;">
+                    <div class="board-panel" style="padding: 20px;">
+                        <span style="display: block; color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 8px;">Total Leads</span>
+                        <span style="font-size: 1.8rem; font-weight: 700;" id="statTotal">4</span>
+                    </div>
+                    <div class="board-panel" style="padding: 20px;">
+                        <span style="display: block; color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 8px;">New Leads</span>
+                        <span style="font-size: 1.8rem; font-weight: 700; color: var(--accent-glow);" id="statNew">2</span>
+                    </div>
+                    <div class="board-panel" style="padding: 20px;">
+                        <span style="display: block; color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 8px;">In Contact</span>
+                        <span style="font-size: 1.8rem; font-weight: 700; color: #f59e0b;" id="statContacted">1</span>
+                    </div>
+                    <div class="board-panel" style="padding: 20px;">
+                        <span style="display: block; color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 8px;">Qualified</span>
+                        <span style="font-size: 1.8rem; font-weight: 700; color: var(--neon-green);" id="statQualified">1</span>
+                    </div>
+                </div>
 
-    <!-- VIEW 6: REPORTS SECTION -->
+                <!-- Leads Table -->
+                <table class="data-table">
+    <thead>
+        <tr>
+            <th>Lead Name</th>
+            <th>Contact Info</th>
+            <th>Budget</th>
+            <th>Status</th>
+            <th>Assigned Agent</th>
+        </tr>
+    </thead>
+    <!-- MAKE SURE THIS TBODY HAS THE ID WRITTEN EXACTLY AS BELOW -->
+    <tbody id="leads-table-body">
+        <tr>
+            <td><strong>Rohan Mehta</strong></td>
+            <td>rohan@gmail.com</td>
+            <td>₹4,50,000</td>
+            <td><span class="badge badge-progress">Assigned</span></td>
+            <td>Aarav Sharma</td>
+        </tr>
+        <tr>
+            <td><strong>Priya Patel</strong></td>
+            <td>priya.p@gmail.com</td>
+            <td>₹7,50,000</td>
+            <td><span class="badge badge-progress">Assigned</span></td>
+            <td>Aarav Sharma</td>
+        </tr>
+        <tr>
+            <td><strong>Ananya Verma</strong></td>
+            <td>ananya.v@gmail.com</td>
+            <td>₹12,00,000</td>
+            <td><span class="badge badge-pending">Pending</span></td>
+            <td>Unassigned</td>
+        </tr>
+        <tr>
+            <td><strong>Vikram Malhotra</strong></td>
+            <td>vikram.m@gmail.com</td>
+            <td>₹6,00,000</td>
+            <td><span class="badge badge-won">Qualified</span></td>
+            <td>Aarav Sharma</td>
+        </tr>
+    </tbody>
+</table>
+                </div>
+            </div>
+
+            <!-- VIEW 6: REPORTS SECTION -->
+            <!-- VIEW 6: REPORTS SECTION -->
 <div id="view-reports" class="view-section">
-    <!-- 1. Top Stat Cards -->
-    <div class="stats-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 20px;">
-        <div class="board-panel" style="padding: 20px;">
-            <span style="display: block; color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 8px;">Total Leads</span>
-            <span style="font-size: 1.8rem; font-weight: 700;">4</span>
+
+    <!-- Section Header Title & Subtitle -->
+    <div style="margin-bottom: 24px;">
+        <h1 style="margin: 0; font-size: 22px; font-weight: 700;">Performance Analytics & Reports</h1>
+        <p style="margin: 4px 0 0 0; color: var(--text-secondary, #94a3b8); font-size: 13px;">
+            Overall platform revenue, lead conversions, and deal performance metrics.
+        </p>
+    </div>
+
+    <!-- 4 Key Stat Cards -->
+    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 20px;">
+        <div class="board-panel" style="padding: 18px 20px;">
+            <span style="color: var(--text-secondary, #94a3b8); font-size: 12px; font-weight: 500;">Total Revenue Generated</span>
+            <h2 style="margin: 8px 0 0 0; font-size: 24px; font-weight: 700; color: #38bdf8;">$1,250,000</h2>
         </div>
-        <div class="board-panel" style="padding: 20px;">
-            <span style="display: block; color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 8px;">Conversion Rate</span>
-            <span style="font-size: 1.8rem; font-weight: 700; color: #38bdf8;">25.0%</span>
+
+        <div class="board-panel" style="padding: 18px 20px;">
+            <span style="color: var(--text-secondary, #94a3b8); font-size: 12px; font-weight: 500;">Lead Conversion Rate</span>
+            <h2 style="margin: 8px 0 0 0; font-size: 24px; font-weight: 700; color: #2dd4bf;">24.8%</h2>
         </div>
-        <div class="board-panel" style="padding: 20px;">
-            <span style="display: block; color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 8px;">Top Source</span>
-            <span style="font-size: 1.8rem; font-weight: 700; color: var(--neon-green);">Website</span>
+
+        <div class="board-panel" style="padding: 18px 20px;">
+            <span style="color: var(--text-secondary, #94a3b8); font-size: 12px; font-weight: 500;">Avg Deal Close Time</span>
+            <h2 style="margin: 8px 0 0 0; font-size: 24px; font-weight: 700; color: #ffffff;">14 Days</h2>
         </div>
-        <div class="board-panel" style="padding: 20px;">
-            <span style="display: block; color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 8px;">Qualified Leads</span>
-            <span style="font-size: 1.8rem; font-weight: 700; color: #f59e0b;">1</span>
+
+        <div class="board-panel" style="padding: 18px 20px;">
+            <span style="color: var(--text-secondary, #94a3b8); font-size: 12px; font-weight: 500;">Deals Won This Month</span>
+            <h2 style="margin: 8px 0 0 0; font-size: 24px; font-weight: 700; color: #fb923c;">38</h2>
         </div>
     </div>
 
-    <!-- 2. Chart & Table Box -->
-    <div class="dashboard-grid">
-        <div class="board-panel">
-            <h3 style="margin-bottom: 16px;">Lead Stage Distribution</h3>
-            <div style="position: relative; height: 250px; width: 100%;">
-                <canvas id="leadStageChart"></canvas>
+    <!-- Charts Row -->
+    <div style="display: grid; grid-template-columns: 2.2fr 1fr; gap: 16px;">
+        <!-- Monthly Revenue & Deals Pipeline Chart -->
+        <div class="board-panel" style="padding: 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                <h3 style="margin: 0; font-size: 15px; font-weight: 600;">Monthly Revenue & Deals Pipeline</h3>
+                <!-- Custom Inline Legend -->
+                <div style="display: flex; gap: 16px; font-size: 11px; color: var(--text-secondary, #94a3b8);">
+                    <span style="display: flex; align-items: center; gap: 6px;">
+                        <span style="width: 12px; height: 8px; background: #c084fc; border-radius: 2px;"></span> Revenue ($)
+                    </span>
+                    <span style="display: flex; align-items: center; gap: 6px;">
+                        <span style="width: 12px; height: 8px; background: #38bdf8; border-radius: 2px;"></span> Deals Closed
+                    </span>
+                </div>
+            </div>
+            <div style="height: 280px; position: relative;">
+                <canvas id="salesTrendChart"></canvas>
             </div>
         </div>
 
-        <div class="board-panel">
-            <h3 style="margin-bottom: 16px;">Acquisition by Source</h3>
-            <table class="data-table">
-                <thead>
-                    <tr>
-                        <th>Source</th>
-                        <th style="text-align: right;">Leads Count</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Website</td>
-                        <td style="text-align: right; color: #38bdf8; font-weight: 600;">1</td>
-                    </tr>
-                    <tr>
-                        <td>LinkedIn</td>
-                        <td style="text-align: right; color: #38bdf8; font-weight: 600;">1</td>
-                    </tr>
-                    <tr>
-                        <td>Referral</td>
-                        <td style="text-align: right; color: #38bdf8; font-weight: 600;">1</td>
-                    </tr>
-                    <tr>
-                        <td>Cold Outreach</td>
-                        <td style="text-align: right; color: #38bdf8; font-weight: 600;">1</td>
-                    </tr>
-                </tbody>
-            </table>
+        <!-- Lead Status Breakdown Donut Chart -->
+        <div class="board-panel" style="padding: 20px;">
+            <h3 style="margin-top: 0; margin-bottom: 16px; font-size: 15px; font-weight: 600;">Lead Status Breakdown</h3>
+            <div style="height: 280px; position: relative;">
+                <canvas id="statusBreakdownChart"></canvas>
+            </div>
         </div>
     </div>
+
 </div>
 
-    <!-- Leads Table Panel -->
-    <div class="board-panel">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-            <h3 style="margin: 0;">All Leads</h3>
-            <input type="text" id="searchInput" class="filter-input" style="width: 260px;" placeholder="Search lead by name or email..." oninput="filterLeadsTable()" />
-        </div>
 
-        <div style="overflow-x: auto;">
-            <table class="data-table">
-                <thead>
-                    <tr>
-                        <th>LEAD NAME</th>
-                        <th>EMAIL</th>
-                        <th>SOURCE</th>
-                        <th>STATUS</th>
-                        
-                    </tr>
-                </thead>
-                <tbody id="leads-table-body"></tbody>
-            </table>
+
+    
+            <!-- VIEW 7: PLACEHOLDER VIEW FOR UNIMPLEMENTED MENUS -->
+            <div id="view-placeholder" class="view-section">
+                <div class="board-panel" style="text-align: center; padding: 60px 20px;">
+                    <h2>Feature Coming Soon 🛠️</h2>
+                    <p style="color: var(--text-secondary);">This module is currently under development for SysInsight CRM.</p>
+                </div>
+            </div>
+
         </div>
     </div>
-</div>
+
+    <!-- JAVASCRIPT LOGIC -->
+
+
 
     <script>
-let isSignUpMode = false;
+        // Simple UI Navigation and Interaction Handler
+        let isSignUpMode = false;
 
-        // GLOBAL SHARED STATE ACROSS ALL MODULES
-        const crmData = {
-            deals: [
-                { id: 1, name: "Grand Vista Villa Purchase", client: "Rohan Mehta", value: 5000000, stage: "Negotiation", date: "2026-08-15", col: "Assigned" },
-                { id: 2, name: "Skyline Penthouse Deal", client: "Ananya Verma", value: 12000000, stage: "Contract Sent", date: "2026-09-02", col: "Pending" },
-                { id: 3, name: "Eco Studio Suite", client: "Vikram Malhotra", value: 2000000, stage: "Closed Won", date: "2026-07-20", col: "Follow-Up" },
-                { id: 4, name: "NAVSHAKTI APARTMENTS", client: "Sejal Wagh", value: 90000000, stage: "Contract Sent", date: "2026-07-25", col: "Pending" }
-            ],
-            tasks: [
-                { id: 1, text: "Follow up with Rohan Mehta regarding Grand Vista Villas price quote", status: "Completed", date: "2026-07-20" },
-                { id: 2, text: "Send property layout PDF to Priya Patel", status: "Due Today", date: "2026-07-24" },
-                { id: 3, text: "Schedule site visit for Ananya Verma at Skyline Towers", status: "Due Tomorrow", date: "2026-07-25" }
-            ]
-        };
-
-        // Live Clock
-        setInterval(() => {
-            const clockEl = document.getElementById('live-timestamp-box');
-            if (clockEl) clockEl.innerText = new Date().toLocaleString('en-IN');
-        }, 1000);
-
-        // Sidebar Navigation Switcher
-function switchTab(element, viewId) {
-    document.querySelectorAll('.nav-item').forEach(item => {
-        item.classList.remove('active');
-        const dot = item.querySelector('.active-dot');
-        if (dot) dot.remove();
-    });
-
-    element.classList.add('active');
-    element.innerHTML += '<div class="active-dot"></div>';
-
-    document.querySelectorAll('.view-section').forEach(view => {
-        view.classList.remove('active-view');
-    });
-
-    const targetView = document.getElementById(viewId);
-    if (targetView) {
-        targetView.classList.add('active-view');
-    }
-
-    // Dynamic fetch for Leads module when selected
-    if (viewId === 'view-leads') {
-        const leadsContainer = document.getElementById('view-leads');
-        if (leadsContainer && leadsContainer.innerHTML.trim() === '') {
-            fetch('leads.html')
-                .then(res => res.text())
-                .then(html => {
-                    leadsContainer.innerHTML = html;
-                    
-                    // Load leads.js script dynamically
-                    if (!document.getElementById('leads-script')) {
-                        const script = document.createElement('script');
-                        script.id = 'leads-script';
-                        script.src = 'leads.js';
-                        document.body.appendChild(script);
-                    } else if (typeof fetchFormLeads === 'function') {
-                        fetchFormLeads();
-                    }
-                })
-                .catch(err => console.error('Error loading leads.html:', err));
-        } else if (typeof fetchFormLeads === 'function') {
-            fetchFormLeads();
-        }
-    }
-}
-
-        // --- MASTER RENDER FUNCTION (LINKS ALL MODULES) ---
-        function renderAllModules() {
-            renderDashboardPipeline();
-            renderDealsTable();
-            renderCalendarEvents();
-            renderTaskList();
+        function toggleInterfaceMode() {
+            isSignUpMode = !isSignUpMode;
+            const heading = document.getElementById('form-heading');
+            const nameBox = document.getElementById('name-field-box');
+            const toggleText = document.querySelector('.toggle-link');
+            
+            if (isSignUpMode) {
+                heading.innerText = 'Create Agent Account';
+                nameBox.style.display = 'block';
+                toggleText.innerHTML = 'Already registered? <span style="color:var(--accent-glow)">Sign in instead</span>';
+            } else {
+                heading.innerText = 'Welcome to SysInsight CRM';
+                nameBox.style.display = 'none';
+                toggleText.innerHTML = 'New CRM agent? <span style="color:var(--accent-glow)">Create an account</span>';
+            }
         }
 
-        // 1. RENDER DASHBOARD SALES PIPELINE
-        function renderDashboardPipeline() {
-            const assignedCol = document.getElementById('pipeline-assigned');
-            const pendingCol = document.getElementById('pipeline-pending');
-            const followCol = document.getElementById('pipeline-followup');
-
-            if (!assignedCol) return; // Guard clause if elements aren't formatted with IDs yet
-
-            assignedCol.innerHTML = '<h4>Assigned</h4>';
-            pendingCol.innerHTML = '<h4>Pending</h4>';
-            followCol.innerHTML = '<h4>Follow-Up</h4>';
-
-            crmData.deals.forEach(deal => {
-                const card = `
-                    <div class="lead-card" onclick="updateBudgetField(${deal.value})">
-                        <strong>${deal.client}</strong>
-                        <div style="font-size: 11px; color: var(--accent-glow); margin-top:2px;">${deal.name}</div>
-                        <div style="font-size: 12px; color: var(--text-secondary); margin-top:4px;">Budget: ₹${deal.value.toLocaleString('en-IN')}</div>
-                    </div>
-                `;
-
-                if (deal.col === 'Assigned') assignedCol.innerHTML += card;
-                else if (deal.col === 'Follow-Up') followCol.innerHTML += card;
-                else pendingCol.innerHTML += card;
-            });
-        }
-
-        // 2. RENDER DEALS TABLE
-        function renderDealsTable() {
-            const tableBody = document.getElementById('deals-table-body');
-            if (!tableBody) return;
-
-            tableBody.innerHTML = '';
-            crmData.deals.forEach(deal => {
-                const badgeClass = deal.stage === 'Closed Won' ? 'badge-won' : 'badge-progress';
-                const formattedDate = deal.date ? new Date(deal.date).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' }) : 'Pending';
-
-                tableBody.innerHTML += `
-                    <tr>
-                        <td><strong>${deal.name}</strong></td>
-                        <td>${deal.client}</td>
-                        <td>₹${deal.value.toLocaleString('en-IN')}</td>
-                        <td><span class="badge ${badgeClass}">${deal.stage}</span></td>
-                        <td>${formattedDate}</td>
-                    </tr>
-                `;
-            });
-        }
-
-        // 3. RENDER CALENDAR EVENTS & DEADLINES
-        function renderCalendarEvents() {
-            // Clears and re-attaches deal milestone chips to respective date cells
-            crmData.deals.forEach(deal => {
-                if (!deal.date) return;
-                const dayNum = parseInt(deal.date.split('-')[2], 10);
-                const cell = document.getElementById(`cal-day-${dayNum}`);
-                if (cell && !cell.querySelector(`[data-deal-id="${deal.id}"]`)) {
-                    cell.innerHTML += `<div class="task-chip task-green" data-deal-id="${deal.id}">${deal.client}: Close Deal</div>`;
-                }
-            });
-        }
-
-       // 4. RENDER TASKS LIST (FIXED WITH ADD, EDIT & DELETE)
-function renderTaskList() {
-    const taskContainer = document.getElementById('view-tasks');
-    if (!taskContainer) return;
-
-    const boardPanel = taskContainer.querySelector('.board-panel');
-    if (!boardPanel) return;
-
-    // Header now includes the "+ Add Task" button
-    let html = `
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-            <h3 style="margin: 0;">My Action Items</h3>
-            <button onclick="openTaskModal()" style="background-color: #9333ea; color: white; border: none; padding: 6px 14px; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 12px;">
-                + Add Task
-            </button>
-        </div>
-    `;
-
-    if (!crmData.tasks || crmData.tasks.length === 0) {
-        html += `<p style="color: #64748b; font-size: 13px; text-align: center; padding: 12px 0;">No tasks found. Click "+ Add Task" above to create one!</p>`;
-    } else {
-        crmData.tasks.forEach(task => {
-            const badgeClass = task.status === 'Completed' ? 'badge-won' : 'badge-progress';
-            const isChecked = task.status === 'Completed' ? 'checked' : '';
-
-            // Rows now include Edit (✏️) and Delete (🗑️) buttons
-            html += `
-                <div class="task-list-item" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding: 10px; background: rgba(15, 23, 42, 0.6); border-radius: 8px;">
-                    <div class="task-check" style="display: flex; align-items: center; gap: 10px;">
-                        <input type="checkbox" ${isChecked} onchange="toggleTaskStatus(${task.id})">
-                        <span style="${isChecked ? 'text-decoration: line-through; opacity: 0.6;' : ''}">${task.text}</span>
-                    </div>
-                    <div style="display: flex; align-items: center; gap: 8px;">
-                        <span class="badge ${badgeClass}">${task.status}</span>
-                        <button onclick="editTask(${task.id})" title="Edit Task" style="background: none; border: none; cursor: pointer; font-size: 14px;">✏️</button>
-                        <button onclick="deleteTask(${task.id})" title="Delete Task" style="background: none; border: none; cursor: pointer; font-size: 14px;">🗑️</button>
-                    </div>
-                </div>
-            `;
-        });
-    }
-
-    boardPanel.innerHTML = html;
-}
-// Helper functions for Adding, Editing, and Deleting tasks
-// OPEN ADD MODAL
-function openTaskModal() {
-    document.getElementById('modal-task-title').innerText = 'Add New Task';
-    document.getElementById('modal-task-id').value = '';
-    document.getElementById('modal-task-input').value = '';
-    document.getElementById('modal-task-status').value = 'Due Today';
-    document.getElementById('custom-task-modal').style.display = 'flex';
-}
-
-// OPEN EDIT MODAL
-function editTask(taskId) {
-    const task = crmData.tasks.find(t => t.id === taskId);
-    if (!task) return;
-
-    document.getElementById('modal-task-title').innerText = 'Edit Task';
-    document.getElementById('modal-task-id').value = task.id;
-    document.getElementById('modal-task-input').value = task.text;
-    document.getElementById('modal-task-status').value = task.status;
-    document.getElementById('custom-task-modal').style.display = 'flex';
-}
-
-function closeTaskModal() {
-    document.getElementById('custom-task-modal').style.display = 'none';
-}
-
-// SAVE TASK (ADD OR EDIT)
-function saveModalTask() {
-    const taskId = document.getElementById('modal-task-id').value;
-    const taskText = document.getElementById('modal-task-input').value.trim();
-    const taskStatus = document.getElementById('modal-task-status').value;
-
-    if (!taskText) {
-        document.getElementById('modal-task-input').style.borderColor = '#ef4444';
-        return;
-    }
-
-    if (taskId) {
-        // Edit existing task
-        const task = crmData.tasks.find(t => t.id == taskId);
-        if (task) {
-            task.text = taskText;
-            task.status = taskStatus;
-        }
-    } else {
-        // Add new task
-        crmData.tasks.push({
-            id: Date.now(),
-            text: taskText,
-            status: taskStatus
-        });
-    }
-
-    if (typeof saveTasksToStorage === 'function') saveTasksToStorage();
-    renderTaskList();
-    closeTaskModal();
-}
-
-// OPEN DELETE MODAL
-function deleteTask(taskId) {
-    document.getElementById('delete-task-id').value = taskId;
-    document.getElementById('custom-delete-modal').style.display = 'flex';
-}
-
-function closeDeleteModal() {
-    document.getElementById('custom-delete-modal').style.display = 'none';
-}
-
-// CONFIRM DELETE
-function confirmDeleteTask() {
-    const taskId = document.getElementById('delete-task-id').value;
-    crmData.tasks = crmData.tasks.filter(t => t.id != taskId);
-
-    if (typeof saveTasksToStorage === 'function') saveTasksToStorage();
-    renderTaskList();
-    closeDeleteModal();
-}
-
-        // MODAL & INTERACTION HANDLERS
-        function openDealModal() {
-            document.getElementById('deal-modal').style.display = 'flex';
-        }
-
-        function closeDealModal() {
-            document.getElementById('deal-modal').style.display = 'none';
-            document.getElementById('deal-name-inp').value = '';
-            document.getElementById('deal-client-inp').value = '';
-            document.getElementById('deal-value-inp').value = '';
-            document.getElementById('deal-date-inp').value = '';
-        }
-
-        function addNewDeal() {
-            const name = document.getElementById('deal-name-inp').value;
-            const client = document.getElementById('deal-client-inp').value;
-            const val = document.getElementById('deal-value-inp').value;
-            const stage = document.getElementById('deal-stage-inp').value;
-            const rawDate = document.getElementById('deal-date-inp').value;
-
-            if (!name || !client || !val) {
-                alert('Please fill in Deal Name, Client, and Value.');
+        function submitAuthData() {
+            const email = document.getElementById('inp-email').value;
+            const name = document.getElementById('inp-name').value || email.split('@')[0] || "Agent";
+            
+            if (!email) {
+                const err = document.getElementById('msg-err');
+                err.innerText = "Please enter a valid username/email.";
+                err.style.display = "block";
                 return;
             }
 
-            const newId = Date.now();
-            const numericVal = Number(val);
+            document.getElementById('auth-screen').style.display = 'none';
+            document.getElementById('crm-dashboard').style.display = 'flex';
+            
+            // Set User profile info
+            document.getElementById('agent-label-name').innerText = name;
+            document.getElementById('agent-display-title').innerText = name;
+            document.getElementById('agent-avatar-initials').innerText = name.charAt(0).toUpperCase();
 
-            // 1. Add to central deals array
-            crmData.deals.push({
-                id: newId,
-                name: name,
-                client: client,
-                value: numericVal,
-                stage: stage,
-                date: rawDate || "2026-07-30",
-                col: stage === 'Closed Won' ? 'Follow-Up' : 'Pending'
-            });
-
-            // 2. Automatically generate a connected Task for this deal
-            crmData.tasks.push({
-                id: newId + 1,
-                text: `Follow up with ${client} regarding ${name}`,
-                status: "Due Soon",
-                date: rawDate
-            });
-
-            // 3. Trigger global re-render across all tabs
-            renderAllModules();
-            closeDealModal();
+            // Update live clock
+            setInterval(() => {
+                const now = new Date();
+                document.getElementById('live-timestamp-box').innerText = now.toLocaleString('en-IN', { dateStyle: 'full', timeStyle: 'medium' });
+            }, 1000);
         }
 
-        function toggleTaskStatus(taskId) {
-            const task = crmData.tasks.find(t => t.id === taskId);
-            if (task) {
-                task.status = task.status === 'Completed' ? 'Due Soon' : 'Completed';
-                renderTaskList();
-            }
+        function switchTab(element, viewId) {
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.active-dot').forEach(el => el.remove());
+            
+            element.classList.add('active');
+            
+            const dot = document.createElement('div');
+            dot.className = 'active-dot';
+            element.appendChild(dot);
+
+            document.querySelectorAll('.view-section').forEach(sec => sec.classList.remove('active-view'));
+            document.getElementById(viewId).classList.add('active-view');
         }
-function toggleInterfaceMode() {
-    isSignUpMode = !isSignUpMode;
-    
-    const nameBox = document.getElementById('name-field-box');
-    const heading = document.getElementById('form-heading');
-    const submitBtn = document.getElementById('submit-auth-btn');
-    const toggleLink = document.getElementById('toggle-link-btn');
-
-    if (isSignUpMode) {
-        nameBox.style.display = 'block';
-        heading.innerText = "Create Agent Account";
-        submitBtn.innerText = "Register Account →";
-        toggleLink.innerHTML = 'Already have an account? <span style="color:var(--accent-glow)">Sign In</span>';
-    } else {
-        nameBox.style.display = 'none';
-        heading.innerText = "Welcome to SysInsight CRM";
-        submitBtn.innerText = "Sign In →";
-        toggleLink.innerHTML = 'New CRM agent? <span style="color:var(--accent-glow)">Create an account</span>';
-    }
-}
-
-async function submitAuthData() {
-    const email = document.getElementById('inp-email').value.trim();
-    const password = document.getElementById('inp-pass').value.trim();
-    const name = document.getElementById('inp-name').value.trim();
-    const errorElement = document.getElementById('msg-err');
-
-    const urlPath = isSignUpMode ? 'signup' : 'login';
-
-    function updateAgentUI(agentName) {
-        if (!agentName) return;
-        // Format name (e.g., "sejal" -> "Sejal")
-        const formattedName = agentName.charAt(0).toUpperCase() + agentName.slice(1);
-        
-        document.getElementById('agent-label-name').innerText = formattedName;
-        document.getElementById('agent-display-title').innerText = formattedName.split(' ')[0];
-        document.getElementById('agent-avatar-initials').innerText = formattedName.charAt(0).toUpperCase();
-    }
-
-    // 1. IF USER IS CREATING AN ACCOUNT (SIGN UP MODE)
-    if (isSignUpMode) {
-        if (!name || !email || !password) {
-            errorElement.innerText = "Please fill in all fields (Name, Email, Password).";
-            errorElement.style.display = 'block';
-            return;
-        }
-
-        // Save account locally so name is remembered across sign in
-        const userAccounts = JSON.parse(localStorage.getItem('registeredUsers') || '{}');
-        userAccounts[email.toLowerCase()] = { name: name, password: password };
-        localStorage.setItem('registeredUsers', JSON.stringify(userAccounts));
-
-        try {
-            await fetch(`http://localhost:3000/api/auth/signup`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email, password, name })
-            });
-        } catch (e) {
-            console.log("Backend offline, relying on local storage registration.");
-        }
-
-        alert(`Account registered for ${name}! Switching to login.`);
-        errorElement.style.display = 'none';
-        toggleInterfaceMode();
-        return;
-    }
-
-    // 2. IF USER IS LOGGING IN (SIGN IN MODE)
-    try {
-        const response = await fetch(`http://localhost:3000/api/auth/login`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, password })
-        });
-
-        const data = await response.json();
-
-        if (!response.ok) {
-            throw new Error(data.message || "Invalid Login");
-        }
-
-        const finalName = data.user ? data.user.name : getSavedName(email);
-        loginUserSuccess(finalName, email);
-
-    } catch (err) {
-        // Fallback: Check local storage for registered name
-        const finalName = getSavedName(email);
-        loginUserSuccess(finalName, email);
-    }
-
-    // Helper function to look up name by email
-    function getSavedName(userEmail) {
-        const userAccounts = JSON.parse(localStorage.getItem('registeredUsers') || '{}');
-        if (userAccounts[userEmail.toLowerCase()]) {
-            return userAccounts[userEmail.toLowerCase()].name;
-        }
-        return userEmail.split('@')[0] || "Agent";
-    }
-
-    // Helper function to trigger successful dashboard login
-    function loginUserSuccess(agentName, userEmail) {
-        updateAgentUI(agentName);
-        localStorage.setItem('currentUser', JSON.stringify({ name: agentName, email: userEmail }));
-
-        document.getElementById('auth-screen').style.display = 'none';
-        document.getElementById('crm-dashboard').style.display = 'flex';
-        renderAllModules();
-        fetchMatchingProjects();
-    }
-}
 
         function performLogout() {
             document.getElementById('crm-dashboard').style.display = 'none';
             document.getElementById('auth-screen').style.display = 'flex';
         }
 
-        async function fetchMatchingProjects() {
-            const budget = document.getElementById('budgetInputBox').value || 0;
-            const renderBox = document.getElementById('inventory-render-target');
-            if(!renderBox) return;
+        function updateBudgetField(amount) {
+            const input = document.getElementById('budgetInputBox');
+            input.value = amount;
+            fetchMatchingProjects();
+        }
 
-            try {
-                const response = await fetch(`http://localhost:3000/api/inventory?budget=${budget}`);
-                const items = await response.json();
-                renderBox.innerHTML = '';
-                items.forEach(p => {
-                    renderBox.innerHTML += `<div class="project-item"><span><strong>${p.name}</strong></span><span>₹${p.price.toLocaleString('en-IN')}</span></div>`;
-                });
-            } catch (err) {
-                renderBox.innerHTML = `
-                    <div class="project-item"><span><strong>Eco Studios</strong></span><span>₹2,00,000</span></div>
-                    <div class="project-item"><span><strong>Skyline Towers</strong></span><span>₹3,50,000</span></div>
-                    <div class="project-item"><span><strong>Grand Vista Villas</strong></span><span>₹5,00,000</span></div>
-                `;
+        function fetchMatchingProjects() {
+            const budget = document.getElementById('budgetInputBox').value;
+            const target = document.getElementById('inventory-render-target');
+            if (!budget) {
+                target.innerHTML = '';
+                return;
+            }
+
+            const projects = [
+                { name: "Eco Studio Suite", price: 2000000 },
+                { name: "Grand Vista Villa", price: 4500000 },
+                { name: "Royal Palms Residency", price: 7500000 },
+                { name: "Skyline Penthouse", price: 12000000 }
+            ];
+
+            const matches = projects.filter(p => p.price <= budget);
+            
+            if (matches.length === 0) {
+                target.innerHTML = `<p style="font-size:12px; color:var(--text-secondary);">No inventory matches found within ₹${budget}</p>`;
+            } else {
+                target.innerHTML = matches.map(m => `
+                    <div class="project-item">
+                        <span><strong>${m.name}</strong></span>
+                        <span style="color:var(--neon-green)">₹${m.price.toLocaleString('en-IN')}</span>
+                    </div>
+                `).join('');
             }
         }
 
-        function updateBudgetField(val) {
-            document.getElementById('budgetInputBox').value = val;
-            fetchMatchingProjects();
-    }
-    if (data.success || response.ok) {
-    // Save user session
-    localStorage.setItem('currentUser', JSON.stringify(data.user));
-    
-    // Redirect to the dashboard page
-    window.location.href = 'dashboard.html';
-} else {
-    alert(data.message);
-}
-// Auto-login on page refresh if session exists
-window.addEventListener('DOMContentLoaded', () => {
-    const storedUser = localStorage.getItem('currentUser');
-    if (storedUser) {
-        const user = JSON.parse(storedUser);
-        
-        document.getElementById('agent-label-name').innerText = user.name;
-        document.getElementById('agent-display-title').innerText = user.name.split(' ')[0];
-        document.getElementById('agent-avatar-initials').innerText = user.name.charAt(0).toUpperCase();
+        /* Deal Modal Functions */
+        function openDealModal() {
+            document.getElementById('deal-modal').style.display = 'flex';
+        }
 
-        document.getElementById('auth-screen').style.display = 'none';
-        document.getElementById('crm-dashboard').style.display = 'flex';
-        
-        renderAllModules();
-        fetchMatchingProjects();
-    }
-});
-</script>
-<!-- ADD / EDIT TASK MODAL -->
-<div id="custom-task-modal" style="display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.75); z-index: 9999; align-items: center; justify-content: center; backdrop-filter: blur(4px);">
-    <div style="background: #0f172a; border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; width: 100%; max-width: 440px; padding: 24px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); color: #f8fafc;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-            <h3 id="modal-task-title" style="margin: 0; font-size: 18px; font-weight: 700; color: #ffffff;">Add New Task</h3>
-            <button onclick="closeTaskModal()" style="background: none; border: none; color: #94a3b8; font-size: 18px; cursor: pointer;">✕</button>
-        </div>
-        
-        <input type="hidden" id="modal-task-id">
+        function closeDealModal() {
+            document.getElementById('deal-modal').style.display = 'none';
+        }
 
-        <div style="margin-bottom: 16px;">
-            <label style="display: block; font-size: 12px; font-weight: 600; color: #94a3b8; margin-bottom: 6px;">Task Description</label>
-            <input type="text" id="modal-task-input" placeholder="e.g. Schedule site visit with Rohan" style="width: 100%; padding: 10px 14px; background: #020617; border: 1px solid #1e293b; border-radius: 8px; color: #ffffff; font-size: 14px; box-sizing: border-box; outline: none;">
-        </div>
+        function addNewDeal() {
+            const name = document.getElementById('deal-name-inp').value;
+            const client = document.getElementById('deal-client-inp').value;
+            const value = document.getElementById('deal-value-inp').value;
+            const stage = document.getElementById('deal-stage-inp').value;
+            const date = document.getElementById('deal-date-inp').value;
 
-        <div style="margin-bottom: 24px;">
-            <label style="display: block; font-size: 12px; font-weight: 600; color: #94a3b8; margin-bottom: 6px;">Status / Priority</label>
-            <select id="modal-task-status" style="width: 100%; padding: 10px 14px; background: #020617; border: 1px solid #1e293b; border-radius: 8px; color: #ffffff; font-size: 14px; box-sizing: border-box; outline: none; cursor: pointer;">
-                <option value="Due Today">Due Today</option>
-                <option value="Due Tomorrow">Due Tomorrow</option>
-                <option value="Due Soon">Due Soon</option>
-                <option value="Completed">Completed</option>
-            </select>
-        </div>
+            if (!name || !client || !value) {
+                alert("Please fill in all required fields.");
+                return;
+            }
 
-        <div style="display: flex; gap: 12px;">
-            <button onclick="closeTaskModal()" style="flex: 1; padding: 10px; background: transparent; border: 1px solid #334155; border-radius: 8px; color: #94a3b8; font-size: 13px; font-weight: 600; cursor: pointer;">Cancel</button>
-            <button onclick="saveModalTask()" style="flex: 1; padding: 10px; background: #9333ea; border: none; border-radius: 8px; color: #ffffff; font-size: 13px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 14px rgba(147, 51, 234, 0.4);">Save Task</button>
-        </div>
-    </div>
-</div>
+            const tbody = document.getElementById('deals-table-body');
+            const row = document.createElement('tr');
+            
+            const isWon = stage === 'Closed Won';
+            const badgeClass = isWon ? 'badge-won' : 'badge-progress';
 
-<!-- DELETE CONFIRMATION MODAL -->
-<div id="custom-delete-modal" style="display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.75); z-index: 9999; align-items: center; justify-content: center; backdrop-filter: blur(4px);">
-    <div style="background: #0f172a; border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; width: 100%; max-width: 380px; padding: 24px; text-align: center; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); color: #f8fafc;">
-        <div style="width: 48px; height: 48px; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; color: #ef4444; font-size: 20px;">
-            🗑️
-        </div>
-        <h3 style="margin: 0 0 8px 0; font-size: 18px; font-weight: 700; color: #ffffff;">Delete Task?</h3>
-        <p style="margin: 0 0 24px 0; font-size: 13px; color: #94a3b8;">Are you sure you want to delete this task? This action cannot be undone.</p>
-        
-        <input type="hidden" id="delete-task-id">
+            row.innerHTML = `
+                <td><strong>${name}</strong></td>
+                <td>${client}</td>
+                <td>₹${Number(value).toLocaleString('en-IN')}</td>
+                <td><span class="badge ${badgeClass}">${stage}</span></td>
+                <td>${date || 'N/A'}</td>
+            `;
 
-        <div style="display: flex; gap: 12px;">
-            <button onclick="closeDeleteModal()" style="flex: 1; padding: 10px; background: transparent; border: 1px solid #334155; border-radius: 8px; color: #94a3b8; font-size: 13px; font-weight: 600; cursor: pointer;">Cancel</button>
-            <button onclick="confirmDeleteTask()" style="flex: 1; padding: 10px; background: #ef4444; border: none; border-radius: 8px; color: #ffffff; font-size: 13px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 14px rgba(239, 68, 68, 0.4);">Delete</button>
-        </div>
-    </div>
-</div>
-            <!-- ADD LEAD MODAL -->
-<div id="addLeadModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1000; align-items: center; justify-content: center;">
-    <div class="board-panel" style="width: 400px; padding: 25px; background: #0f172a; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);">
-        <h3 style="margin-top: 0;">Add New Lead</h3>
-        
-        <label style="display: block; margin: 10px 0 5px; font-size: 0.85rem; color: var(--text-secondary);">Name</label>
-        <input type="text" id="newLeadName" class="filter-input" style="width: 100%;" placeholder="Enter full name" />
+            tbody.appendChild(row);
+            closeDealModal();
 
-        <label style="display: block; margin: 10px 0 5px; font-size: 0.85rem; color: var(--text-secondary);">Email</label>
-        <input type="email" id="newLeadEmail" class="filter-input" style="width: 100%;" placeholder="Enter email address" />
+            // Clear Inputs
+            document.getElementById('deal-name-inp').value = '';
+            document.getElementById('deal-client-inp').value = '';
+            document.getElementById('deal-value-inp').value = '';
+        }
+    </script>
 
-        <label style="display: block; margin: 10px 0 5px; font-size: 0.85rem; color: var(--text-secondary);">Source</label>
-        <input type="text" id="newLeadSource" class="filter-input" style="width: 100%;" placeholder="e.g. Website, LinkedIn, Manual" value="Manual" />
+    <script>
+        function addNewLead() {
+    // 1. Grab values from the modal inputs
+    const nameInput = document.getElementById('lead-name-inp');
+    const contactInput = document.getElementById('lead-contact-inp');
+    const budgetInput = document.getElementById('lead-budget-inp');
+    const statusInput = document.getElementById('lead-status-inp');
+    const agentInput = document.getElementById('lead-agent-inp');
 
-        <div style="display: flex; gap: 10px; margin-top: 20px; justify-content: flex-end;">
-            <button onclick="closeLeadModal()" style="padding: 8px 16px; background: transparent; border: 1px solid rgba(255,255,255,0.2); color: white; border-radius: 6px; cursor: pointer;">Cancel</button>
-            <button onclick="addNewLead()" class="auth-btn" style="width: auto; padding: 8px 16px; margin: 0;">Save Lead</button>
-        </div>
-    </div>
-</div>
-            <script src="leads.js"></script>
-</body>
-            <!-- MODAL FOR ADDING NEW LEAD -->
-<!-- MODAL FOR ADDING NEW LEAD (GOOGLE FORM OPTION) -->
-<div id="lead-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); justify-content: center; align-items: center; z-index: 1000;">
-    <div class="auth-card" style="max-width: 450px; background-color: var(--bg-card); border: 1px solid rgba(255,255,255,0.1);">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-            <h3 style="margin: 0;">Add New Lead</h3>
-            <span style="cursor: pointer; font-size: 20px; color: var(--text-secondary);" onclick="closeLeadModal()">✕</span>
-        </div>
-        
-        <div class="input-wrapper">
-            <label>Lead Name</label>
-            <input type="text" id="lead-name-inp" class="auth-input" placeholder="e.g. Rahul Sharma">
-        </div>
-        <div class="input-wrapper">
-            <label>Email Address</label>
-            <input type="email" id="lead-email-inp" class="auth-input" placeholder="e.g. rahul@example.com">
-        </div>
-        
-        <div class="input-wrapper">
-            <label>Source</label>
-            <select id="lead-source-inp" class="auth-input" style="cursor: pointer;">
-                <option value="Google Form" selected>Google Form</option>
-            </select>
-        </div>
+    const name = nameInput.value.trim();
+    const contact = contactInput.value.trim();
+    const budget = budgetInput.value.trim();
+    const status = statusInput.value;
+    const agent = agentInput.value.trim() || 'Unassigned';
 
-        <div class="input-wrapper">
-            <label>Status</label>
-            <select id="lead-status-inp" class="auth-input" style="cursor: pointer;">
-                <option value="New">New</option>
-                <option value="Contacted">Contacted</option>
-                <option value="Qualified">Qualified</option>
-            </select>
-        </div>
-
-        <div style="display: flex; gap: 10px; margin-top: 15px;">
-            <button class="auth-btn" style="background-color: transparent; border: 1px solid var(--text-secondary);" onclick="closeLeadModal()">Cancel</button>
-            <button class="auth-btn" onclick="addNewLead()">Save Lead</button>
-        </div>
-    </div>
-</div>
-            <script>
-   // 1. Function to switch tabs & trigger fetchFormLeads automatically
-function switchTab(element, viewId) {
-    document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-    if (element) element.classList.add('active');
-
-    document.querySelectorAll('.view-section').forEach(view => view.classList.remove('active-view'));
-    const targetView = document.getElementById(viewId);
-    if (targetView) targetView.classList.add('active-view');
-
-    // Automatically trigger fetchFormLeads when switching tabs
-    if (typeof fetchFormLeads === 'function') {
-        fetchFormLeads();
-    }
-}
-
-// 2. Open and Close modal functions for "+ Add New Lead"
-function openLeadModal() {
-    document.getElementById('lead-modal').style.display = 'flex';
-}
-
-function closeLeadModal() {
-    document.getElementById('lead-modal').style.display = 'none';
-}
-
-// 3. Submit function for adding Google Form leads
-function addNewLead() {
-    const name = document.getElementById('lead-name-inp').value;
-    const email = document.getElementById('lead-email-inp').value;
-    const source = document.getElementById('lead-source-inp').value;
-    const status = document.getElementById('lead-status-inp').value;
-
-    if (!name || !email) {
-        alert('Please fill in both Name and Email.');
+    // Validation check
+    if (!name || !contact || !budget) {
+        alert("Please fill in Name, Contact, and Budget!");
         return;
     }
 
-    // Target specifically the LEADS table
-    const leadsTableBody = document.getElementById('leads-table-body'); 
-
-    if (leadsTableBody) {
-        // Create today's date formatted (e.g., YYYY-MM-DD or simple date) for Due Date
-        const today = new Date().toISOString().split('T')[0];
-
-        // Create a new table row
-        const row = document.createElement('tr');
-        row.innerHTML = `
-            <td><strong>${name}</strong></td>
-            <td>${email}</td>
-            <td>${source}</td>
-            <td>${status}</td>
-            <td>${today}</td>
-        `;
-        
-        // Insert at the top of the Leads table
-        leadsTableBody.prepend(row);
-    } else {
-        console.error("Could not find table with id='leads-table-body'");
+    // 2. Find the table body
+    const tbody = document.getElementById('leads-table-body');
+    if (!tbody) {
+        alert("Error: Table body id='leads-table-body' was not found in HTML!");
+        return;
     }
 
-    // Close modal & reset inputs
-    closeLeadModal();
-    document.getElementById('lead-name-inp').value = '';
-    document.getElementById('lead-email-inp').value = '';
-}
-</script>
-            <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const ctx = document.getElementById("leadStageChart");
+    // 3. Create a new table row
+    const row = document.createElement('tr');
 
-        if (ctx) {
-            new Chart(ctx, {
-                type: "bar",
-                data: {
-                    labels: ["New Leads", "In Contact", "Qualified"],
-                    datasets: [
-                        {
-                            label: "Leads Count",
-                            data: [2, 1, 1],
-                            backgroundColor: [
-                                "#2b82b5", // Blue bar
-                                "#b2731e", // Amber bar
-                                "#1f8a4c"  // Green bar
-                            ],
-                            borderRadius: 4,
-                            borderSkipped: false
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: { display: false }
-                    },
-                    scales: {
-                        x: {
-                            grid: { display: false },
-                            ticks: { color: "#94a3b8", font: { size: 11 } }
-                        },
-                        y: {
-                            beginAtZero: true,
-                            max: 2,
-                            ticks: { stepSize: 1, color: "#94a3b8", font: { size: 11 } },
-                            grid: { color: "rgba(255, 255, 255, 0.05)" }
-                        }
-                    }
-                }
-            });
+    let badgeClass = 'badge-progress';
+    if (status === 'Pending') badgeClass = 'badge-pending';
+    if (status === 'Qualified') badgeClass = 'badge-won';
+
+    const formattedBudget = '₹' + Number(budget).toLocaleString('en-IN');
+
+    row.innerHTML = `
+        <td><strong>${name}</strong></td>
+        <td>${contact}</td>
+        <td>${formattedBudget}</td>
+        <td><span class="badge ${badgeClass}">${status}</span></td>
+        <td>${agent}</td>
+    `;
+
+    // 4. Append row to table
+    tbody.appendChild(row);
+
+    // 5. Update stat counters if elements exist
+    const totalEl = document.getElementById('statTotal');
+    if (totalEl) {
+        totalEl.innerText = Number(totalEl.innerText) + 1;
+    }
+
+    // 6. Reset form fields and close modal
+    nameInput.value = '';
+    contactInput.value = '';
+    budgetInput.value = '';
+    agentInput.value = '';
+    
+    closeLeadModal();
+}
+    </script>
+
+
+
+    <!-- 1. PASTE STEP 2 (THE LEAD MODAL HTML) HERE -->
+    <div id="lead-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); justify-content: center; align-items: center; z-index: 1000;">
+        <div class="auth-card" style="max-width: 450px; background-color: var(--bg-card); border: 1px solid rgba(255,255,255,0.1);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h3 style="margin: 0;">Add New Lead</h3>
+                <span style="cursor: pointer; font-size: 20px; color: var(--text-secondary);" onclick="closeLeadModal()">✕</span>
+            </div>
+            
+            <div class="input-wrapper">
+                <label>Lead Full Name</label>
+                <input type="text" id="lead-name-inp" class="auth-input" placeholder="e.g. Ramesh Kumar">
+            </div>
+            <div class="input-wrapper">
+                <label>Email Address / Phone</label>
+                <input type="text" id="lead-contact-inp" class="auth-input" placeholder="e.g. ramesh@gmail.com">
+            </div>
+            <div class="input-wrapper">
+                <label>Budget (₹)</label>
+                <input type="number" id="lead-budget-inp" class="auth-input" placeholder="e.g. 500000">
+            </div>
+            <div class="input-wrapper">
+                <label>Status</label>
+                <select id="lead-status-inp" class="auth-input" style="cursor: pointer;">
+                    <option value="Assigned">Assigned</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Qualified">Qualified</option>
+                </select>
+            </div>
+            <div class="input-wrapper">
+                <label>Assigned Agent Name</label>
+                <input type="text" id="lead-agent-inp" class="auth-input" placeholder="e.g. Aarav Sharma">
+            </div>
+
+            <div style="display: flex; gap: 10px; margin-top: 15px;">
+                <button class="auth-btn" style="background-color: transparent; border: 1px solid var(--text-secondary);" onclick="closeLeadModal()">Cancel</button>
+                <button class="auth-btn" onclick="addNewLead()">Save Lead</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. JAVASCRIPT GOES INSIDE SCRIPT TAGS RIGHT AFTER -->
+    <script>
+        function openLeadModal() {
+            document.getElementById('lead-modal').style.display = 'flex';
+        }
+
+        function closeLeadModal() {
+            document.getElementById('lead-modal').style.display = 'none';
+        }
+        
+        // ... rest of your JavaScript functions here ...
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+    // 1. Line Chart: Monthly Sales & Revenue Trend
+    const ctxTrend = document.getElementById('salesTrendChart').getContext('2d');
+    new Chart(ctxTrend, {
+        type: 'line',
+        data: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+            datasets: [{
+                label: 'Revenue (in ₹ L)',
+                data: [5, 8, 12, 10, 15, 18, 19],
+                borderColor: '#3b82f6',
+                backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#3b82f6',
+                pointRadius: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#94a3b8' } }
+            },
+            scales: {
+                x: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } },
+                y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } }
+            }
         }
     });
-</script>
+
+    // 2. Doughnut Chart: Lead Status Breakdown
+    const ctxStatus = document.getElementById('statusBreakdownChart').getContext('2d');
+    new Chart(ctxStatus, {
+        type: 'doughnut',
+        data: {
+            labels: ['Assigned', 'Pending', 'Follow-Up', 'Closed Won'],
+            datasets: [{
+                data: [40, 20, 20, 20],
+                backgroundColor: ['#3b82f6', '#f59e0b', '#a855f7', '#10b981'],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: { color: '#94a3b8', boxWidth: 12 }
+                }
+            },
+            cutout: '65%'
+        }
+    });
+});
+    </script>
+
+<!-- SCRIPT FOR NAVIGATION & TASK MANAGEMENT -->
+    <script>
+        // Tab Switch Functionality
+        function switchTab(element, viewId) {
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+            document.querySelectorAll('.view-section').forEach(section => section.classList.remove('active-view'));
+
+            element.classList.add('active');
+            const target = document.getElementById(viewId);
+            if (target) {
+                target.classList.add('active-view');
+            } else {
+                document.getElementById('view-placeholder').classList.add('active-view');
+            }
+        }
+
+        // Add Task Functionality
+        function addNewTask() {
+            const taskInput = document.getElementById('new-task-text');
+            const statusSelect = document.getElementById('new-task-status');
+            const container = document.getElementById('tasks-container');
+
+            const taskText = taskInput.value.trim();
+            if (!taskText) {
+                alert("Please enter a task description.");
+                return;
+            }
+
+            const taskId = 'task-' + Date.now();
+            const statusVal = statusSelect.value;
+            const badgeClass = statusVal === 'Completed' ? 'badge-won' : 'badge-progress';
+
+            const taskHtml = `
+                <div class="task-list-item" id="${taskId}">
+                    <div class="task-check">
+                        <input type="checkbox" onchange="toggleTaskStatus(this)">
+                        <span>${taskText}</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <span class="badge ${badgeClass}">${statusVal}</span>
+                        <button onclick="deleteTask('${taskId}')" style="background: none; border: none; color: var(--neon-red); cursor: pointer; font-size: 16px;" title="Delete Task">🗑️</button>
+                    </div>
+                </div>
+            `;
+
+            container.insertAdjacentHTML('beforeend', taskHtml);
+            taskInput.value = '';
+        }
+
+        // Delete Task Functionality
+        function deleteTask(taskId) {
+            const taskElement = document.getElementById(taskId);
+            if (taskElement) {
+                taskElement.remove();
+            }
+        }
+
+        // Toggle Task Completion Functionality
+        function toggleTaskStatus(checkbox) {
+            const taskItem = checkbox.closest('.task-list-item');
+            const taskText = taskItem.querySelector('span:not(.badge)');
+            const badge = taskItem.querySelector('.badge');
+
+            if (checkbox.checked) {
+                taskText.style.textDecoration = 'line-through';
+                taskText.style.color = 'var(--text-secondary)';
+                badge.className = 'badge badge-won';
+                badge.textContent = 'Completed';
+            } else {
+                taskText.style.textDecoration = 'none';
+                taskText.style.color = 'var(--text-primary)';
+                badge.className = 'badge badge-progress';
+                badge.textContent = 'Due Today';
+            }
+        }
+
+        // Basic Authentication Toggle Demo
+        function submitAuthData() {
+    const email = document.getElementById('inp-email').value.trim();
+    const nameInput = document.getElementById('inp-name').value.trim();
+    
+    // Check if user provided a full name; otherwise, derive it from the email handle or fallback to "Agent"
+    let name = nameInput;
+    if (!name) {
+        if (email && email.includes('@')) {
+            name = email.split('@')[0];
+        } else if (email) {
+            name = email;
+        } else {
+            name = "Agent";
+        }
+    }
+
+    // Basic Validation: check if email/username is entered
+    if (!email) {
+        const err = document.getElementById('msg-err');
+        if (err) {
+            err.innerText = "Please enter a valid username/email.";
+            err.style.display = "block";
+        } else {
+            alert("Please enter a valid username/email.");
+        }
+        return;
+    }
+
+    // Hide auth screen and show dashboard
+    document.getElementById('auth-screen').style.display = 'none';
+    document.getElementById('crm-dashboard').style.display = 'flex';
+
+    // Set dynamic user profile information
+    document.getElementById('agent-label-name').innerText = name;
+    document.getElementById('agent-display-title').innerText = name;
+    document.getElementById('agent-avatar-initials').innerText = name.charAt(0).toUpperCase();
+
+    // Start live clock update
+    setInterval(() => {
+        const now = new Date();
+        const clockBox = document.getElementById('live-timestamp-box');
+        if (clockBox) {
+            clockBox.innerText = now.toLocaleString('en-IN', {
+                dateStyle: 'full',
+                timeStyle: 'medium'
+            });
+        }
+    }, 1000);
+}
+
+        function performLogout() {
+            document.getElementById('crm-dashboard').style.display = 'none';
+            document.getElementById('auth-screen').style.display = 'flex';
+        }
+    </script>
+</body>
+</html>
+
+
+
+</body>
 </html>
