@@ -1,112 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SysInsight CRM - Leads</title>
-  <link rel="stylesheet" href="leads.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="refresh" content="0; url=index.html">
+    <script>
+        localStorage.setItem('sysinsight_target_tab', 'view-leads');
+        window.location.href = "index.html";
+    </script>
+    <title>Redirecting to Leads Overview...</title>
 </head>
 <body>
-
-  <div class="leads-container">
-    <!-- Header / Welcome Banner -->
-    <div class="welcome-card">
-      <div class="welcome-text">
-        <h2>Leads Overview ⚡</h2>
-        <p>Manage, track, and assign incoming prospective clients for SysInsight CRM.</p>
-      </div>
-      <button class="btn-primary" id="openModalBtn">+ Add New Lead</button>
-    </div>
-
-    <!-- Key Metrics Cards -->
-    <div class="stats-grid">
-      <div class="stat-card">
-        <span class="stat-title">Total Leads</span>
-        <span class="stat-value" id="statTotal">0</span>
-      </div>
-      <div class="stat-card">
-        <span class="stat-title">New Leads</span>
-        <span class="stat-value text-blue" id="statNew">0</span>
-      </div>
-      <div class="stat-card">
-        <span class="stat-title">In Contact</span>
-        <span class="stat-value text-orange" id="statContacted">0</span>
-      </div>
-      <div class="stat-card">
-        <span class="stat-title">Qualified</span>
-        <span class="stat-value text-green" id="statQualified">0</span>
-      </div>
-    </div>
-
-    <!-- Leads Table Container -->
-    <div class="content-card">
-      <div class="table-toolbar">
-        <h3>All Leads</h3>
-        <div class="search-box">
-          <input type="text" id="searchInput" placeholder="Search lead by name or email..." />
-        </div>
-      </div>
-
-      <div class="table-wrapper">
-        <table class="leads-table">
-          <thead>
-            <tr>
-              <th>Lead Name</th>
-              <th>Email</th>
-              <th>Source</th>
-              <th>Status</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody id="leadsTableBody">
-            <!-- Dynamic rows injected via leads.js -->
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-
-  <!-- Add Lead Modal Overlay -->
-  <div class="modal-overlay" id="leadModal">
-    <div class="modal-card">
-      <div class="modal-header">
-        <h3>Add New Lead</h3>
-        <button class="modal-close" id="closeModalBtn">&times;</button>
-      </div>
-      <form id="addLeadForm">
-        <div class="form-group">
-          <label for="leadName">Full Name</label>
-          <input type="text" id="leadName" required placeholder="e.g. Ananya Roy">
-        </div>
-        <div class="form-group">
-          <label for="leadEmail">Email Address</label>
-          <input type="email" id="leadEmail" required placeholder="e.g. ananya@example.com">
-        </div>
-        <div class="form-group">
-          <label for="leadSource">Lead Source</label>
-          <select id="leadSource">
-            <option value="Website">Website</option>
-            <option value="LinkedIn">LinkedIn</option>
-            <option value="Referral">Referral</option>
-            <option value="Cold Outreach">Cold Outreach</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="leadStatus">Initial Status</label>
-          <select id="leadStatus">
-            <option value="New">New</option>
-            <option value="Contacted">Contacted</option>
-            <option value="Qualified">Qualified</option>
-          </select>
-        </div>
-        <div class="modal-actions">
-          <button type="button" class="btn-secondary" id="cancelModalBtn">Cancel</button>
-          <button type="submit" class="btn-primary">Save Lead</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <script src="leads.js"></script>
+    <p>Redirecting to <a href="index.html">Leads Overview</a>...</p>
 </body>
 </html>
