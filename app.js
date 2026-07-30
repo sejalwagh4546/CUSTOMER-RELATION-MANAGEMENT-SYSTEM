@@ -29,26 +29,106 @@ app.post('/api/auth/signup', (req, res) => {
     registeredUsers.push({ email, password, name: agentName });
     res.json({ success: true, message: "Registration successful! You can now log in." });
 });
+// --- Chart.js Configuration matching your Theme ---
+Chart.defaults.color = '#94a3b8';
+Chart.defaults.borderColor = '#111a33';
 
-app.post('/api/auth/login', (req, res) => {
-    const { email, password } = req.body;
-    const user = registeredUsers.find(u => u.email.toLowerCase() === email.toLowerCase() && u.password === password);
-    if (!user) {
-        return res.status(401).json({ success: false, message: "Invalid email or password credentials." });
-    }
-    res.json({ success: true, message: "Access Granted.", user: { name: user.name, email: user.email } });
+// Initialize Charts when the Reports tab is accessed
+let chartsInitialized = false;
+
+function initCharts() {
+    if (chartsInitialized) return;
+    chartsInitialized = true;
+
+    const ctxPie = document.getElementById('leadPieChart').getContext('2d');
+    new Chart(ctxPie, {
+    type: 'doughnut',
+    data: {
+        labels: ['Organic Search', 'Direct Sales', 'LinkedIn', 'Referrals'],
+        datasets: [{
+        data: [40, 25, 20, 15],
+        backgroundColor: ['#3b82f6', '#10b981', '#a855f7', '#ef4444'],
+        borderWidth: 0
+        }]
+    },
+    options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
 });
 
-// --- INVENTORY ENDPOINTS ---
-app.get('/api/inventory', (req, res) => {
-    const masterInventory = [
-        { id: 1, name: "Eco Studios", price: 200000, status: "Available" },
-        { id: 2, name: "Skyline Towers", price: 350000, status: "Available" },
-        { id: 3, name: "Grand Vista Villas", price: 500000, status: "Sold Out" }
+const ctxBar = document.getElementById('salesBarChart').getContext('2d');
+    new Chart(ctxBar, {
+    type: 'bar',
+    data: {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+        datasets: [{
+        label: 'Revenue ($)',
+        data: [12000, 19000, 15000, 22000, 28000, 34000],
+        backgroundColor: '#3b82f6',
+        borderRadius: 6
+        }]
+    },
+    options: { responsive: true, scales: { y: { beginAtZero: true } } }
+    });
+}
+
+// --- Reports Persistence ---
+function saveReportDetails() {
+    localStorage.setItem('sysinsight_report_title', document.getElementById('report-title-input').value);
+    localStorage.setItem('sysinsight_report_notes', document.getElementById('report-notes').value);
+    alert('Report updated and saved to Local Storage!');
+}
+
+function loadSavedReport() {
+    const title = localStorage.getItem('sysinsight_report_title');
+    const notes = localStorage.getItem('sysinsight_report_notes');
+    if (title) document.getElementById('report-title-input').value = title;
+    if (notes) document.getElementById('report-notes').value = notes;
+}
+
+// --- Sales Team Management ---
+function loadSalesTeam() {
+    let users = JSON.parse(localStorage.getItem('sysinsight_users')) || [
+    { name: "sejal", email: "sejal@sysinsight.io", date: new Date().toISOString().split('T')[0], status: "Active" }
     ];
-    const maxBudget = parseFloat(req.query.budget);
-    if (!maxBudget) return res.json(masterInventory);
-    res.json(masterInventory.filter(item => item.price <= maxBudget));
+    localStorage.setItem('sysinsight_users', JSON.stringify(users));
+
+    const tbody = document.getElementById('sales-team-table-body');
+    if (!tbody) return;
+    tbody.innerHTML = '';
+    users.forEach(user => {
+    tbody.innerHTML += `
+    <tr>
+        <td style="font-weight: 500; color: var(--text-primary);">${user.name}</td>
+        <td style="color: var(--text-secondary);">${user.email}</td>
+        <td style="color: var(--text-secondary);">${user.date}</td>
+        <td>
+        <span class="status-badge status-active">
+        <span class="status-dot"></span> ${user.status}
+        </span>
+        </td>
+    </tr>`;
+    });
+}
+
+function registerUser(event) {
+    event.preventDefault();
+    const users = JSON.parse(localStorage.getItem('sysinsight_users')) || [];
+    users.push({
+    name: document.getElementById('reg-name').value,
+    email: document.getElementById('reg-email').value,
+    date: new Date().toISOString().split('T')[0],
+    status: "Active"
+    });
+localStorage.setItem('sysinsight_users', JSON.stringify(users));
+document.getElementById('reg-name').value = '';
+document.getElementById('reg-email').value = '';
+loadSalesTeam();
+}
+
+// Initialize on page load
+window.addEventListener('DOMContentLoaded', () => {
+    initCharts();
+    loadSavedReport();
+    loadSalesTeam();
 });
 
 app.listen(PORT, () => console.log(`🚀 SysInsight Backend serving on http://localhost:${PORT}`));

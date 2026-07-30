@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacts - SysInsight CRM</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="leads.css">
+</head>
+<body>
+
+    <div id="crm-dashboard" style="display: flex; min-height: 100vh;">
+        
+        <!-- SIDEBAR NAVIGATION -->
+        <div class="sidebar">
+            <div class="sidebar-logo"><span>⚡</span> SysInsight</div>
+            <div class="menu-group-title">Main Menu</div>
+            <a href="index.html" class="nav-item"><div class="nav-item-content"><span>📊</span> Dashboard</div></a>
+            <a href="leads.html" class="nav-item"><div class="nav-item-content"><span>🎯</span> Leads</div></a>
+            <a href="contacts.html" class="nav-item active">
+                <div class="nav-item-content"><span>📇</span> Contacts</div>
+                <div class="active-dot"></div>
+            </a>
+            <a href="#" class="nav-item"><div class="nav-item-content"><span>💼</span> Deals</div></a>
+            <a href="#" class="nav-item"><div class="nav-item-content"><span>📅</span> Calendar</div></a>
+            <a href="#" class="nav-item"><div class="nav-item-content"><span>✅</span> Tasks</div></a>
+            
+            <div class="logout-btn" onclick="window.location.href='index.html'">
+                <span>🚪</span> Logout
+            </div>
+        </div>
+
+        <!-- MAIN CONTENT AREA -->
+        <div class="main-content">
+            
+            <!-- Header Banner -->
+            <div class="welcome-card" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <div>
+                    <h2 style="margin: 0 0 6px 0; font-size: 1.5rem;">Contacts Directory</h2>
+                    <p style="margin: 0; color: var(--text-secondary); font-size: 0.9rem;">
+                        Manage client details and company affiliations.
+                    </p>
+                </div>
+                <button class="auth-btn" style="width: auto; padding: 10px 20px; margin: 0;" onclick="openContactModal()">+ Add New Contact</button>
+            </div>
+
+            <!-- Search & Filter Controls -->
+            <div class="board-panel" style="margin-bottom: 20px; padding: 15px;">
+                <div style="display: flex; gap: 15px;">
+                    <input type="text" id="contactSearchInput" class="filter-input" placeholder="Search by name, email, or company..." oninput="filterContacts()">
+                    <select id="contactTypeFilter" class="filter-input" style="width: 200px; cursor: pointer;" onchange="filterContacts()">
+                        <option value="All">All Types</option>
+                        <option value="Client">Client</option>
+                        <option value="Prospect">Prospect</option>
+                        <option value="Partner">Partner</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Contacts Data Table -->
+            <div class="board-panel">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Contact Name</th>
+                            <th>Email & Phone</th>
+                            <th>Company</th>
+                            <th>Type</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="contacts-table-body">
+                        <tr>
+                            <td><strong>Rohan Mehta</strong></td>
+                            <td>rohan@gmail.com<br><small style="color: var(--text-secondary);">+91 98765 43210</small></td>
+                            <td>Apex Developers</td>
+                            <td><span class="badge badge-won">Client</span></td>
+                            <td>
+                                <button onclick="deleteContact(this)" style="background: none; border: none; color: var(--neon-red); cursor: pointer; font-size: 14px;">Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Priya Patel</strong></td>
+                            <td>priya.p@gmail.com<br><small style="color: var(--text-secondary);">+91 91234 56789</small></td>
+                            <td>BlueSky Realty</td>
+                            <td><span class="badge badge-progress">Prospect</span></td>
+                            <td>
+                                <button onclick="deleteContact(this)" style="background: none; border: none; color: var(--neon-red); cursor: pointer; font-size: 14px;">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ADD CONTACT MODAL POPUP -->
+    <div id="contact-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); justify-content: center; align-items: center; z-index: 1000;">
+        <div class="auth-card" style="max-width: 450px; background-color: var(--bg-card); border: 1px solid rgba(255,255,255,0.1);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h3 style="margin: 0;">Add New Contact</h3>
+                <span style="cursor: pointer; font-size: 20px; color: var(--text-secondary);" onclick="closeContactModal()">✕</span>
+            </div>
+
+            <div class="input-wrapper">
+                <label>Full Name</label>
+                <input type="text" id="cnt-name" class="auth-input" placeholder="e.g. Rahul Sharma">
+            </div>
+            <div class="input-wrapper">
+                <label>Email Address</label>
+                <input type="email" id="cnt-email" class="auth-input" placeholder="e.g. rahul@example.com">
+            </div>
+            <div class="input-wrapper">
+                <label>Phone Number</label>
+                <input type="text" id="cnt-phone" class="auth-input" placeholder="e.g. +91 99887 76655">
+            </div>
+            <div class="input-wrapper">
+                <label>Company</label>
+                <input type="text" id="cnt-company" class="auth-input" placeholder="e.g. TechCorp">
+            </div>
+            <div class="input-wrapper">
+                <label>Contact Type</label>
+                <select id="cnt-type" class="auth-input" style="cursor: pointer;">
+                    <option value="Client">Client</option>
+                    <option value="Prospect">Prospect</option>
+                    <option value="Partner">Partner</option>
+                </select>
+            </div>
+
+            <div style="display: flex; gap: 10px; margin-top: 15px;">
+                <button class="auth-btn" style="background-color: transparent; border: 1px solid var(--text-secondary);" onclick="closeContactModal()">Cancel</button>
+                <button class="auth-btn" onclick="addNewContact()">Save Contact</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        function openContactModal() {
+            document.getElementById('contact-modal').style.display = 'flex';
+        }
+
+        function closeContactModal() {
+            document.getElementById('contact-modal').style.display = 'none';
+            document.getElementById('cnt-name').value = '';
+            document.getElementById('cnt-email').value = '';
+            document.getElementById('cnt-phone').value = '';
+            document.getElementById('cnt-company').value = '';
+        }
+
+        function addNewContact() {
+            const name = document.getElementById('cnt-name').value.trim();
+            const email = document.getElementById('cnt-email').value.trim();
+            const phone = document.getElementById('cnt-phone').value.trim();
+            const company = document.getElementById('cnt-company').value.trim() || 'N/A';
+            const type = document.getElementById('cnt-type').value;
+
+            if (!name || !email) {
+                alert("Please enter Full Name and Email!");
+                return;
+            }
+
+            const tbody = document.getElementById('contacts-table-body');
+            const row = document.createElement('tr');
+
+            let badgeClass = 'badge-progress';
+            if (type === 'Client') badgeClass = 'badge-won';
+            if (type === 'Partner') badgeClass = 'badge-pending';
+
+            row.innerHTML = `
+                <td><strong>${name}</strong></td>
+                <td>${email}<br><small style="color: var(--text-secondary);">${phone || 'N/A'}</small></td>
+                <td>${company}</td>
+                <td><span class="badge ${badgeClass}">${type}</span></td>
+                <td>
+                    <button onclick="deleteContact(this)" style="background: none; border: none; color: var(--neon-red); cursor: pointer; font-size: 14px;">Delete</button>
+                </td>
+            `;
+
+            tbody.appendChild(row);
+            closeContactModal();
+        }
+
+        function deleteContact(button) {
+            const row = button.closest('tr');
+            if (confirm("Are you sure you want to delete this contact?")) {
+                row.remove();
+            }
+        }
+
+        function filterContacts() {
+            const searchText = document.getElementById('contactSearchInput').value.toLowerCase();
+            const selectedType = document.getElementById('contactTypeFilter').value;
+            const rows = document.querySelectorAll('#contacts-table-body tr');
+
+            rows.forEach(row => {
+                const rowText = row.innerText.toLowerCase();
+                const badgeElement = row.querySelector('.badge');
+                const typeBadge = badgeElement ? badgeElement.innerText : '';
+
+                const matchesSearch = rowText.includes(searchText);
+                const matchesType = (selectedType === 'All' || typeBadge === selectedType);
+
+                if (matchesSearch && matchesType) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>
