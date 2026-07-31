@@ -93,6 +93,29 @@
         .task-blue { background: rgba(59, 130, 246, 0.2); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.4); }
         .task-purple { background: rgba(168, 85, 247, 0.2); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.4); }
         .task-green { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4); }
+        /* Mobile Responsive Overrides */
+ @media (max-width: 768px) {
+    #crm-dashboard {
+        flex-direction: column !important;
+    }
+    
+    .sidebar {
+        width: 100% !important;
+        min-width: 100% !important;
+        border-right: none !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+    }
+
+    .dashboard-grid, .kanban-row {
+        grid-template-columns: 1fr !important;
+    }
+
+    .top-navbar {
+        flex-direction: column !important;
+        gap: 15px !important;
+        align-items: flex-start !important;
+    }
+}
     </style>
 </head>
 <body>
