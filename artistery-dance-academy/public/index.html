@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Artistery Dance Academy | Express Your Soul Through Dance</title>
+  <meta name="description" content="Artistery Dance Academy located near Bharat Mata Chowk, MOSHI, PUNE. Join regular dance classes, private choreography, and wedding sangeet choreography for kids, adults, and couples. Contact: 8767100648.">
+  
+  <!-- Google Fonts & FontAwesome Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- CSS Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Top Announcement Bar -->
+  <div class="top-bar">
+    <div class="container top-bar-content">
+      <div class="top-info">
+        <span><i class="fa-solid fa-location-dot"></i> Near Bharat Mata Chowk, MOSHI, PUNE</span>
+        <span><i class="fa-solid fa-phone"></i> +91 8767100648</span>
+        <span><i class="fa-solid fa-envelope"></i> waghsejal.8676@gmail.com</span>
+      </div>
+      <div class="top-links">
+        <a href="https://wa.me/918767100648?text=Hello%20Artistery%20Academy%2C%20I%20want%20more%20details%20about%20your%20dance%20classes%21" target="_blank" class="top-wa-link">
+          <i class="fa-brands fa-whatsapp"></i> Chat on WhatsApp
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Navigation Header -->
+  <header class="navbar" id="navbar">
+    <div class="container nav-container">
+      <a href="#" class="brand-logo">
+        <div class="logo-icon"><i class="fa-solid fa-person-dancing"></i></div>
+        <div class="logo-text">
+          <span class="brand-title">ARTISTERY</span>
+          <span class="brand-sub">DANCE ACADEMY</span>
+        </div>
+      </a>
+
+      <nav class="nav-menu" id="navMenu">
+        <a href="#hero" class="nav-link active"><i class="fa-solid fa-house"></i> Home</a>
+        <a href="#classes" class="nav-link"><i class="fa-solid fa-icons"></i> Classes & Gallery</a>
+        <a href="#pricing" class="nav-link"><i class="fa-solid fa-tags"></i> Pricing</a>
+        <a href="#contact" class="nav-link"><i class="fa-solid fa-address-book"></i> Contact</a>
+        <a href="#contact" class="btn btn-primary nav-enroll-btn"><i class="fa-solid fa-bolt"></i> Enroll Now</a>
+        <button class="btn btn-admin-icon" id="openAdminBtn" title="Admin Settings">
+          <i class="fa-solid fa-gear"></i> Settings
+        </button>
+      </nav>
+
+      <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle Navigation">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-section" id="hero">
+    <div class="hero-glow hero-glow-1"></div>
+    <div class="hero-glow hero-glow-2"></div>
+    
+    <div class="container hero-container">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span class="badge-dot"></span> Premier Dance Studio • Near Bharat Mata Chowk ,
+          Moshi, Pune
+        </div>
+        <h1 class="hero-title">
+          Unleash Your Rhythm at <span class="gradient-text">Artistery Academy</span>
+        </h1>
+        <p class="hero-description">
+          Step into a vibrant world of music, expression, and energy. From beginner-friendly regular batches to grand custom Sangeet choreography for Kids, Adults & Couples.
+        </p>
+
+        <div class="hero-actions">
+          <a href="#contact" class="btn btn-hero-primary">
+            <i class="fa-solid fa-user-plus"></i> Enroll Now
+          </a>
+          <a href="https://wa.me/918767100648?text=Hello%20Artistery%20Academy%2C%20I%20want%20more%20details%20about%20your%20dance%20classes%21" target="_blank" class="btn btn-hero-wa">
+            <i class="fa-brands fa-whatsapp"></i> For more details connect us on WhatsApp
+          </a>
+        </div>
+
+        <div class="hero-stats">
+          <div class="stat-card">
+            <h3>Happy Dancers</h3>
+            <p>Energetic Environment</p>
+          </div>
+          <div class="stat-card">
+            <h3>Multiple Styles</h3>
+            <p>Bollywood, Garba & Sangeet</p>
+          </div>
+          <div class="stat-card">
+            <h3>100%</h3>
+            <p>Stage Confidence</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="visual-card">
+          <img src="/uploads/hero.jpg" alt="Artistery Dance Academy Session" id="heroImg">
+          <div class="visual-tag">
+            <i class="fa-solid fa-fire"></i> Energetic Live Sessions
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 1: Classes & Session Photos Gallery -->
+  <section class="section classes-section" id="classes">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-badge"><i class="fa-solid fa-icons"></i> Sessions & Gallery</div>
+        <h2 class="section-title">Our Conducted <span class="gradient-text">Dance Sessions</span></h2>
+        <p class="section-subtitle">Take a glimpse into our energetic studio practice, student workshops, and grand sangeet rehearsals.</p>
+      </div>
+
+      <!-- Filter Buttons -->
+      <div class="filter-bar">
+        <button class="filter-btn active" data-filter="all">All Sessions</button>
+        <button class="filter-btn" data-filter="Bollywood">Bollywood</button>
+        <button class="filter-btn" data-filter="Garba">Garba & Dandiya</button>
+        <button class="filter-btn" data-filter="Semi-Classical">Semi-Classical (Speciality)</button>
+        <button class="filter-btn" data-filter="Sangeet">Sangeet Special</button>
+        <button class="filter-btn" data-filter="Hip-Hop">Hip-Hop & Urban</button>
+      </div>
+
+      <!-- Photos Grid Dynamic Container -->
+      <div class="gallery-grid" id="galleryGrid">
+        <!-- Dynamically rendered via JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 2: Pricing Section -->
+  <section class="section pricing-section" id="pricing">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-badge"><i class="fa-solid fa-tags"></i> Affordable Plans</div>
+        <h2 class="section-title">Transparent & Flexible <span class="gradient-text">Pricing</span></h2>
+        <p class="section-subtitle">Choose the perfect plan tailored for individual growth, private choreography, or family sangeet celebrations.</p>
+      </div>
+
+      <!-- Pricing Cards Dynamic Container -->
+      <div class="pricing-grid" id="pricingGrid">
+        <!-- Dynamically populated from SQLite Database -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 3: Contact & Enquiry Form (Visible to Admin Only in Backend) -->
+  <section class="section contact-section" id="contact">
+    <div class="container contact-container">
+      <div class="contact-info-card">
+        <div class="section-badge"><i class="fa-solid fa-headset"></i> Get In Touch</div>
+        <h2>Connect With <span class="gradient-text">Artistery Academy</span></h2>
+        <p>Have questions about batch timings, fee structures, or customized choreography? Send us an enquiry or chat directly on WhatsApp!</p>
+
+        <div class="info-list">
+          <div class="info-item">
+            <div class="info-icon"><i class="fa-solid fa-location-dot"></i></div>
+            <div>
+              <h4>Studio Location</h4>
+              <p id="infoLocation">Near Bharat Mata Chowk, MOSHI, PUNE</p>
+            </div>
+          </div>
+
+          <div class="info-item">
+            <div class="info-icon"><i class="fa-solid fa-phone"></i></div>
+            <div>
+              <h4>Call / Phone</h4>
+              <p id="infoPhone">+91 8767100648</p>
+            </div>
+          </div>
+
+          <div class="info-item">
+            <div class="info-icon"><i class="fa-solid fa-envelope"></i></div>
+            <div>
+              <h4>Email Us</h4>
+              <p id="infoEmail">waghsejal.8676@gmail.com</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="wa-direct-banner">
+          <p><i class="fa-brands fa-whatsapp"></i> Prefer instant answers?</p>
+          <a href="https://wa.me/918767100648?text=Hello%20Artistery%20Academy%2C%20I%20want%20more%20details%20about%20your%20dance%20classes%21" target="_blank" class="btn btn-wa-block">
+            For more details connect us on WhatsApp
+          </a>
+        </div>
+      </div>
+
+      <div class="contact-form-card">
+        <div class="form-header">
+          <h3><i class="fa-solid fa-paper-plane"></i> Student Enquiry & Enrollment</h3>
+          <p>Fill out the details below to reserve your spot.</p>
+        </div>
+
+        <form id="enquiryForm" class="enquiry-form">
+          <div class="form-group">
+            <label for="enqName"><i class="fa-solid fa-user"></i> Full Name *</label>
+            <input type="text" id="enqName" placeholder="Enter your full name" required>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="enqAge"><i class="fa-solid fa-cake-candles"></i> Age *</label>
+              <input type="number" id="enqAge" placeholder="e.g. 18" min="3" max="90" required>
+            </div>
+
+            <div class="form-group">
+              <label for="enqStyle"><i class="fa-solid fa-music"></i> Preferred Dance Style *</label>
+              <select id="enqStyle" required>
+                <option value="" disabled selected>Select style</option>
+                <option value="Bollywood">Bollywood</option>
+                <option value="Garba & Dandiya Special">Garba & Dandiya Special</option>
+                <option value="Semi-Classical (Speciality)">Semi-Classical (Speciality)</option>
+                <option value="Hip-Hop">Hip-Hop & Urban</option>
+                <option value="Contemporary">Contemporary</option>
+                <option value="Salsa & Bachata">Salsa & Bachata</option>
+                <option value="Freestyle">Freestyle</option>
+                <option value="Sangeet - Kids (7-16)">Sangeet - Kids (7-16)</option>
+                <option value="Sangeet - Adults">Sangeet - Adults</option>
+                <option value="Sangeet - Couple">Sangeet - Couple</option>
+                <option value="Private Choreography">Private Choreography</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="enqEmail"><i class="fa-solid fa-envelope"></i> Email Address *</label>
+              <input type="email" id="enqEmail" placeholder="name@example.com" required>
+            </div>
+
+            <div class="form-group">
+              <label for="enqPhone"><i class="fa-solid fa-phone"></i> Contact No. *</label>
+              <input type="tel" id="enqPhone" placeholder="Enter 10-digit mobile number" required pattern="[0-9]{10}">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="enqNotes"><i class="fa-solid fa-message"></i> Special Requests / Preferred Batch Timing</label>
+            <textarea id="enqNotes" rows="3" placeholder="Tell us if you prefer morning or evening batch, or event date..."></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-submit-enroll" id="submitEnquiryBtn">
+            <span><i class="fa-solid fa-bolt"></i> ENROLL NOW</span>
+          </button>
+          
+          <div id="enquirySuccessMsg" class="alert alert-success hidden">
+            <i class="fa-solid fa-circle-check"></i> Thank you! Your enquiry has been received. Our team will contact you shortly!
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-content">
+      <div class="footer-brand">
+        <div class="logo-icon"><i class="fa-solid fa-person-dancing"></i></div>
+        <span class="brand-title">ARTISTERY ACADEMY</span>
+        <p>Bringing passion, rhythm, and confidence to every dancer. Near Bharat Mata Chowk, MOSHI, PUNE.</p>
+      </div>
+
+      <div class="footer-contact">
+        <p><i class="fa-solid fa-phone"></i> <strong>Contact:</strong> 8767100648</p>
+        <p><i class="fa-solid fa-envelope"></i> <strong>Email:</strong> waghsejal.8676@gmail.com</p>
+        <p><i class="fa-solid fa-location-dot"></i> <strong>Location:</strong> Near Bharat Mata Chowk, MOSHI, PUNE</p>
+      </div>
+
+      <div class="footer-copy">
+        <p>&copy; 2026 Artistery Dance Academy. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating Sticky WhatsApp Widget Button -->
+  <a href="https://wa.me/918767100648?text=Hello%20Artistery%20Academy%2C%20I%20want%20more%20details%20about%20your%20dance%20classes%21" target="_blank" class="floating-wa-btn" id="floatingWaBtn">
+    <div class="wa-btn-icon"><i class="fa-brands fa-whatsapp"></i></div>
+    <div class="wa-btn-text">
+      <span>for more details connect us on whatsapp</span>
+    </div>
+  </a>
+
+  <!-- Lightbox Modal for Photo Gallery -->
+  <div class="modal lightbox-modal" id="lightboxModal">
+    <div class="modal-content lightbox-content">
+      <button class="modal-close" id="closeLightbox">&times;</button>
+      <img src="" id="lightboxImg" alt="Gallery Photo">
+      <div class="lightbox-caption">
+        <h3 id="lightboxTitle"></h3>
+        <p id="lightboxDesc"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADMIN PORTAL / SETTINGS MODAL -->
+  <div class="modal admin-modal" id="adminModal">
+    <div class="modal-content admin-content">
+      <div class="modal-header">
+        <h2><i class="fa-solid fa-user-shield"></i> Admin Portal & Settings</h2>
+        <button class="modal-close" id="closeAdminModal">&times;</button>
+      </div>
+
+      <!-- Admin Login View -->
+      <div id="adminLoginSection" class="admin-login-box">
+        <div class="login-header">
+          <i class="fa-solid fa-lock login-lock-icon"></i>
+          <h3>Owner Login (Sejal Wagh)</h3>
+          <p>Log in to manage pricing, upload session photos, and view confidential student enquiries.</p>
+        </div>
+
+        <form id="adminLoginForm">
+          <div class="form-group">
+            <label for="adminUsername"><i class="fa-solid fa-user"></i> Admin Email / User ID</label>
+            <input type="text" id="adminUsername" placeholder="Enter admin email or user ID" required>
+          </div>
+          <div class="form-group">
+            <label for="adminPassword"><i class="fa-solid fa-key"></i> Password</label>
+            <input type="password" id="adminPassword" placeholder="Enter admin password" required>
+          </div>
+          <button type="submit" class="btn btn-primary btn-full"><i class="fa-solid fa-right-to-bracket"></i> Login to Dashboard</button>
+          <div id="adminLoginErr" class="alert alert-danger hidden"></div>
+        </form>
+      </div>
+
+      <!-- Admin Authenticated Dashboard View -->
+      <div id="adminDashboardSection" class="admin-dashboard hidden">
+        <div class="admin-bar">
+          <span class="admin-welcome"><i class="fa-solid fa-circle-user"></i> Logged in as: <strong id="adminUserDisplay">admin</strong></span>
+          <button class="btn btn-sm btn-outline-danger" id="adminLogoutBtn"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</button>
+        </div>
+
+        <!-- Admin Tabs -->
+        <div class="admin-tabs">
+          <button class="admin-tab active" data-tab="tabEnquiries"><i class="fa-solid fa-user-check"></i> Enquiries Box (<span id="enquiryBadgeCount">0</span>)</button>
+          <button class="admin-tab" data-tab="tabPricing"><i class="fa-solid fa-indian-rupee-sign"></i> Edit Pricing</button>
+          <button class="admin-tab" data-tab="tabPhotos"><i class="fa-solid fa-camera"></i> Upload Session Photos</button>
+          <button class="admin-tab" data-tab="tabSettings"><i class="fa-solid fa-sliders"></i> Contact & Info Settings</button>
+        </div>
+
+        <!-- TAB 1: CONFIDENTIAL ENQUIRIES (Only Visible to Admin) -->
+        <div class="tab-pane active" id="tabEnquiries">
+          <div class="tab-header">
+            <h3>Student Enquiries & Registrations</h3>
+            <p>Confidential information submitted via the website form.</p>
+          </div>
+          <div class="table-responsive">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Name</th>
+                  <th>Age</th>
+                  <th>Dance Style</th>
+                  <th>Email</th>
+                  <th>Contact No</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="enquiriesTableBody">
+                <!-- Populated via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- TAB 2: EDIT PRICING -->
+        <div class="tab-pane" id="tabPricing">
+          <div class="tab-header">
+            <h3>Manage & Edit Pricing Tiers</h3>
+            <p>Make changes to course fees instantly. Updates are stored directly in the SQLite database.</p>
+          </div>
+          <div id="adminPricingList" class="admin-pricing-list">
+            <!-- Populated via JS -->
+          </div>
+        </div>
+
+        <!-- TAB 3: UPLOAD & MANAGE PHOTOS -->
+        <div class="tab-pane" id="tabPhotos">
+          <div class="tab-header">
+            <h3>Upload New Session Photos</h3>
+            <p>Post photos of conducted dance sessions to showcase in the website gallery.</p>
+          </div>
+
+          <form id="addPhotoForm" class="admin-form-box">
+            <div class="form-row">
+              <div class="form-group">
+                <label>Photo Title *</label>
+                <input type="text" id="photoTitle" placeholder="e.g. Energetic Bollywood Batch" required>
+              </div>
+              <div class="form-group">
+                <label>Category *</label>
+                <select id="photoCategory" required>
+                  <option value="Bollywood">Bollywood</option>
+                  <option value="Garba">Garba & Dandiya</option>
+                  <option value="Semi-Classical">Semi-Classical (Speciality)</option>
+                  <option value="Sangeet">Sangeet Special</option>
+                  <option value="Hip-Hop">Hip-Hop & Urban</option>
+                  <option value="Workshops">Workshops</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label>Upload Image File (from device)</label>
+                <input type="file" id="photoFile" accept="image/*">
+              </div>
+              <div class="form-group">
+                <label>OR Image URL</label>
+                <input type="text" id="photoUrl" placeholder="https://example.com/photo.jpg">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Description</label>
+              <input type="text" id="photoDesc" placeholder="Brief session details...">
+            </div>
+
+            <button type="submit" class="btn btn-primary"><i class="fa-solid fa-cloud-arrow-up"></i> Post Photo to Gallery</button>
+          </form>
+
+          <h4 class="mt-4">Current Session Photos</h4>
+          <div id="adminPhotosList" class="admin-photos-grid">
+            <!-- Populated via JS -->
+          </div>
+        </div>
+
+        <!-- TAB 4: ACADEMY SETTINGS -->
+        <div class="tab-pane" id="tabSettings">
+          <div class="tab-header">
+            <h3>Academy Details & Contact Info</h3>
+            <p>Update phone number, location, or admin contact email.</p>
+          </div>
+
+          <form id="settingsForm" class="admin-form-box">
+            <div class="form-group">
+              <label>Academy Name</label>
+              <input type="text" id="setAcademyName" value="Artistery Academy">
+            </div>
+            <div class="form-group">
+              <label>Contact Number (WhatsApp)</label>
+              <input type="text" id="setContactNo" value="8767100648">
+            </div>
+            <div class="form-group">
+              <label>Location / Address</label>
+              <input type="text" id="setLocation" value="Near Bharat Mata Chowk, MOSHI, PUNE">
+            </div>
+            <div class="form-group">
+              <label>Admin Email</label>
+              <input type="email" id="setEmail" value="waghsejal.8676@gmail.com">
+            </div>
+            <button type="submit" class="btn btn-success"><i class="fa-solid fa-floppy-disk"></i> Save Settings Changes</button>
+            <div id="settingsSuccessMsg" class="alert alert-success hidden mt-3">Settings updated successfully!</div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- JS Scripts -->
+  <script src="js/app.js"></script>
+</body>
+</html>
